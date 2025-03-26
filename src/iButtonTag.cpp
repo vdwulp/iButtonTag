@@ -152,31 +152,12 @@ bool iButtonTag::equalCode( const uint8_t* a, const uint8_t* b ) {
 // reversed (reverse = true) to match the sequence fysically engraved on many
 // iButtons.
 void iButtonTag::printCode( const uint8_t* code, bool reverse /* = false */ ) {
-  if ( reverse ) reverseCode( code );
+  iButtonCode printable;
+  for( uint8_t i = 0; i < 8; i++ ) printable[i] = code[reverse?7-i:i];
+
   for( uint8_t i = 0; i < 8; i++ ) {
-    if ( code[i] < 0x10 ) Serial.print( "0" );
-    Serial.print( code[i], HEX );
+    if ( printable[i] < 0x10 ) Serial.print( "0" );
+    Serial.print( printable[i], HEX );
     if ( i < 7 ) Serial.print( " " );
   }
-  if ( reverse ) reverseCode( code );
-}
-
-// Reverses iButtonCode bytes.
-//
-// All bytes of iButtonCode are _changed_ to reversed order.
-void iButtonTag::reverseCode( uint8_t* code ) {
-  uint8_t tmp;
-  for( uint8_t i = 0; i < 4; i++ ) {
-    tmp = code[i];
-    code[i] = code[7-i];
-    code[7-i] = tmp;
-  }
-}
-
-// Reverses iButtonCode bytes in a different array.
-//
-// All bytes of _original_ iButtonCode are transferred to _reversed_ iButtonCode
-// in reversed order.
-void iButtonTag::reverseCode( const uint8_t* original, uint8_t* reversed ) {
-  for( uint8_t i = 0; i < 8; i++ ) reversed[i] = original[7-i];
 }
