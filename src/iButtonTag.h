@@ -1,3 +1,7 @@
+// SA van der Wulp    | March 26, 2025
+// Copyright (c) 2025 | MIT License
+// https://github.com/vdwulp/iButtonTag
+
 #ifndef iButtonTag_h
 #define iButtonTag_h
 
