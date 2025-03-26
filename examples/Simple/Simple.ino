@@ -9,7 +9,8 @@
 iButtonTag ibutton( PIN_PROBE );            // Setup iButtonTag on the pin
 
 void setup(void) {
-  Serial.begin(9600);
+  Serial.begin( 9600 );
+  Serial.println( "iButtonTag Library Demo" );
 }
 
 void loop(void) {
