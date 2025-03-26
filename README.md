@@ -1,5 +1,11 @@
 # Arduino iButtonTag Library
 
+[![Arduino CI](https://github.com/vdwulp/iButtonTag/actions/workflows/arduino-ci.yml/badge.svg)](https://github.com/marketplace/actions/arduino_ci)
+[![Arduino-lint](https://github.com/vdwulp/iButtonTag/actions/workflows/arduino-lint.yml/badge.svg)](https://github.com/marketplace/actions/arduino-arduino-lint-action)
+[![JSON-syntax](https://github.com/vdwulp/iButtonTag/actions/workflows/json-syntax.yml/badge.svg)](https://github.com/marketplace/actions/json-syntax-check)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/vdwulp/iButtonTag/blob/main/LICENSE)
+[![GitHub release](https://img.shields.io/github/v/release/vdwulp/iButtonTag.svg?maxAge=3600)](https://github.com/vdwulp/iButtonTag/releases)
+
 An Arduino library handling iButton identification tags.
 
 ## Supported Devices
@@ -13,28 +19,30 @@ An Arduino library handling iButton identification tags.
 
 ## Installation
 
-### Manual installation of library iButtonTag
-_Installation of iButtonTag using the Arduino IDE Library Manager is not available at the moment, possibly in the future._
-1. Download the latest release from [GitHub releases](https://github.com/vdwulp/iButtonTag/releases)
-2. In Arduino IDE, go to Sketch > Include Library > Add .ZIP Library...
-3. Select the downloaded ZIP file
-4. Make sure to install required library OneWire too (see below)
-
-### Installation of required library OneWire
-_OneWire can be installed using the Arduino IDE Library Manager._
+### Using Arduino IDE Library Manager - _Recommended!_
 1. Open Arduino IDE
 2. Go to Tools > Manage Libraries...
-3. Search for "OneWire"
+3. Search for "iButtonTag"
 4. Click Install
+5. Click Install All to also install required OneWire library
+
+_If you don't see the Install All button mentioned in step 5, you have an older Arduino IDE (<1.8.10). Consider upgrading the IDE, or repeat steps 1 to 4 above to install OneWire library. In step 3 search for "OneWire"._
+
+### Manual installation
+1. Download the latest release ZIP file from [iButtonTag releases](https://github.com/vdwulp/iButtonTag/releases)
+2. In Arduino IDE, go to Sketch > Include Library > Add .ZIP Library...
+3. Select the downloaded ZIP file
+4. Repeat steps above to install required _OneWire_ library; in step 1 download ZIP file from [OneWire releases](https://github.com/PaulStoffregen/OneWire/releases)
 
 ## Basic Usage
 
-1. **Hardware Setup**
-   - Connect data line of iButton probe to an Arduino digital pin, this is the 1-Wire data line.
-   - Connect a 4k7 kΩ pull-up resistor between the 1-Wire data line and Arduino 5V power pin.
-   - Connect ground line of iButton probe to an Arduino ground (GND) pin.
+### Hardware Setup
+- Connect data line of iButton probe to an Arduino digital pin, this is the 1-Wire data line.
+- Connect a 4k7 kΩ pull-up resistor between the 1-Wire data line and Arduino 5V power pin.
+- Connect ground line of iButton probe to an Arduino ground (GND) pin.
 
-2. **Code Example**
+### Code Example
+
    ```cpp
    #include <iButtonTag.h>                     // Include the library
 
@@ -94,6 +102,11 @@ iButton probes are essentially just connecting the two parts of an iButton _cyli
 - [Book of iButton Standards](https://www.analog.com/media/en/technical-documentation/tech-articles/book-of-ibuttonreg-standards.pdf)
 - [DS1990A](https://www.analog.com/media/en/technical-documentation/data-sheets/ds1990a.pdf)
 - [DS1990R](https://www.analog.com/media/en/technical-documentation/data-sheets/DS1990R-DS1990R-F5.pdf)
+
+## Thanks
+
+- The creator(s) of the [OneWire](https://github.com/PaulStoffregen/OneWire) library iButtonTag depends on. It's a very solid implementation of the 1-Wire protocol. I learned a lot by studying the protocol documentation in combination with the source of this library.
+- The creator(s) of the [DallasTemperature](https://github.com/milesburton/Arduino-Temperature-Control-Library) library. When studying the 1-Wire protocol, working with the Dallas DS18B20 Temperature Sensor made everything more practical. In this period I also tried to contribute to this library.
 
 ## License
 
