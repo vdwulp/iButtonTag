@@ -16,8 +16,8 @@ iButtonTag ibutton( PIN_PROBE );
  */
 void setup( void ) {
   // Start serial port
-  Serial.begin(9600);
-  Serial.println("iButtonTag Library Demo");
+  Serial.begin( 9600 );
+  Serial.println( "iButtonTag Library Demo" );
 }
 
 /*
