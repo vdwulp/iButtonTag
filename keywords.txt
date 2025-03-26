@@ -1,0 +1,21 @@
+# Syntax coloring map for iButtonTag
+
+# Datatypes (KEYWORD1)
+iButtonTag	KEYWORD1
+iButtonCode	KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+readCode	KEYWORD2
+readCodes	KEYWORD2
+nextCode	KEYWORD2
+testCode	KEYWORD2
+equalCode	KEYWORD2
+printCode	KEYWORD2
+
+# Instances (KEYWORD2)
+
+# Structures (KEYWORD3)
+
+# Constants (LITERAL1)
+
+# Unknown (LITERAL2)
