@@ -32,10 +32,6 @@ class iButtonTag {
     // OneWire instance
     OneWire* _wire;
 
-    // Static functions
-    static void reverseCode( uint8_t* );
-    static void reverseCode( const uint8_t*, uint8_t* );
-
 };
 
 #endif // iButtonTag_h
