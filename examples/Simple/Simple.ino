@@ -1,3 +1,7 @@
+// SA van der Wulp    | March 26, 2025
+// Copyright (c) 2025 | MIT License
+// https://github.com/vdwulp/iButtonTag
+
 #include <iButtonTag.h>                     // Include the library
 
 #define PIN_PROBE 2                         // Data line connected to pin 2
@@ -16,7 +20,7 @@ void loop(void) {
   
   if ( status > 0 ) {                       // Code read succesfully
     Serial.print( "iButton code read: " );
-    ibutton.printCode( code );              // ID-code is in variable /code/
+    ibutton.printCode( code );              // ID-code is in variable _code_
     Serial.println();
   }
 }
