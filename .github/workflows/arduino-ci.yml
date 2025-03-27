@@ -72,7 +72,7 @@ jobs:
 
       - name: List repository contents (for debugging)
         run: |
-          ls -a -R
+          ls -R
 
       - name: Run tests (skip example compilation)
         run: |
