@@ -85,20 +85,27 @@ unittest( iButtonTag_basics ) {
   // Function printCode
   GodmodeState* state = GODMODE();
 
+  state->serialPort[0].dataOut = "";
   ibutton.printCode( codezero );
   assertEqual( "00 00 00 00 00 00 00 00", state -> serialPort[0].dataOut );
+  state->serialPort[0].dataOut = "";
   ibutton.printCode( codecrc );
   assertEqual( "01 0B 15 1F 29 33 3D E8", state -> serialPort[0].dataOut );
+  state->serialPort[0].dataOut = "";
   ibutton.printCode( codecrcfail );
   assertEqual( "01 0B 15 1F 29 33 3D 47", state -> serialPort[0].dataOut );
 
+  state->serialPort[0].dataOut = "";
   ibutton.printCode( codecrc, false );
   assertEqual( "01 0B 15 1F 29 33 3D E8", state -> serialPort[0].dataOut );
+  state->serialPort[0].dataOut = "";
   ibutton.printCode( codecrcfail, false );
   assertEqual( "01 0B 15 1F 29 33 3D 47", state -> serialPort[0].dataOut );
 
+  state->serialPort[0].dataOut = "";
   ibutton.printCode( codecrc, true );
   assertEqual( "E8 3D 33 29 1F 15 0B 01", state -> serialPort[0].dataOut );
+  state->serialPort[0].dataOut = "";
   ibutton.printCode( codecrcfail, true );
   assertEqual( "47 3D 33 29 1F 15 0B 01", state -> serialPort[0].dataOut );
 
