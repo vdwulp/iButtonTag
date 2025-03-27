@@ -67,6 +67,7 @@ jobs:
       - name: Install dependencies
         run: |
           cp ./test/arduino-ci.gemfile Gemfile
+          cp ./test/arduino-ci.yml .arduino-ci.yml
           bundle install
 
       - name: List repository contents (for debugging)
