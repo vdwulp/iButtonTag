@@ -5,11 +5,6 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        gemfile:
-          - .github/workflows/arduino-ci.gemfile
-
     steps:
       - uses: actions/checkout@v3
 
@@ -71,7 +66,7 @@ jobs:
 
       - name: Install dependencies
         env:
-          BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+          BUNDLE_GEMFILE: ./test/arduino-ci.gemfile
         run: |
           bundle install
 
