@@ -1,3 +1,7 @@
+// SA van der Wulp    | March 27, 2025
+// Copyright (c) 2025 | MIT License
+// https://github.com/vdwulp/iButtonTag
+
 #include <ArduinoUnitTests.h>
 #include <iButtonTag.h>
 
@@ -73,6 +77,11 @@ unittest( iButtonTag_basics ) {
   equal = ibutton.equalCode( codecrcfail, codecrcfail );
   assertTrue( equal );
 
+  // Function printCode  ** Test of 'godmode' **
+  GodmodeState* state = GODMODE();
+  ibutton.printCode( codezero );
+  assertEqual("00 00 00 00 00 00 00 00", state->serialPort[0].dataOut);
+  
 }
 
 unittest_main()
