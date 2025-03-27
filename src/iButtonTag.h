@@ -15,9 +15,10 @@ typedef uint8_t iButtonCode[8];
 class iButtonTag {
 
   public:
-    // Constructor
+    // Constructor/destructor
     iButtonTag( uint8_t );
-    
+    ~iButtonTag() { delete _wire; };
+
     // Functions
     int8_t readCode( uint8_t*, bool = false );
     int8_t readCodes();
