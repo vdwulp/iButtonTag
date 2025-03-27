@@ -9,8 +9,6 @@ unittest( iButtonTag_basics ) {
 
   // Variables
   iButtonCode code, codezero, codecrc, codecrcfail;
-  int8_t status;
-  bool equal;
 
   // Fill predefined codes
   for( uint8_t i = 0; i < 8; i++ ) {
@@ -25,87 +23,81 @@ unittest( iButtonTag_basics ) {
   iButtonTag ibutton( 2 );
 
   // Function readCode
-  status = ibutton.readCode( code );
-  equal = ibutton.equalCode( code, codezero );
-  assertEqual( 0,  status ); // No iButton detected
-  assertTrue( equal );
+  // Return values:
+  //    1 - Next iButton read succesfully, code array filled with identifying code
+  //    0 - No more iButtons detected, code array is unchanged
+  //   -1 - Invalid iButton code read, CRC8 failed, code array with invalid bytes
+  //   -2 - Invalid iButton code read, all zeros, code array with invalid bytes
+  assertEqual( 0, ibutton.readCode( code ) );         // No iButton detected
+  assertTrue( ibutton.equalCode( code, codezero ) );
 
-  status = ibutton.readCode( code, false );
-  equal = ibutton.equalCode( code, codezero );
-  assertEqual( 0,  status ); // No iButton detected
-  assertTrue( equal );
+  assertEqual( 0, ibutton.readCode( code, false ) );  // No iButton detected
+  assertTrue( ibutton.equalCode( code, codezero ) );
 
-  status = ibutton.readCode( code, true );
-  equal = ibutton.equalCode( code, codezero );
-  assertEqual( 0,  status ); // No iButton detected
-  assertTrue( equal );
+  assertEqual( 0, ibutton.readCode( code, true ) );   // No iButton detected
+  assertTrue( ibutton.equalCode( code, codezero ) );
 
   // Function readCodes
-  status = ibutton.readCodes();
-  assertEqual( 0,  status ); // No iButton detected
+  // Return values:
+  //    1 - At least one iButton detected, enumerate with nextCode function
+  //    0 - No iButton detected
+  assertEqual( 0, ibutton.readCodes() );              // No iButton detected
 
   // Function nextCode
-  status = ibutton.nextCode( code );
-  equal = ibutton.equalCode( code, codezero );
-  assertEqual( 0,  status ); // No iButton detected
-  assertTrue( equal );
+  // Return values:
+  //    1 - Next iButton read succesfully, code array filled with identifying code
+  //    0 - No more iButtons detected, code array is unchanged
+  //   -1 - Invalid iButton code read, CRC8 failed, code array with invalid bytes
+  //   -2 - Invalid iButton code read, all zeros, code array with invalid bytes
+  assertEqual( 0, ibutton.nextCode( code ) );         // No iButton detected
+  assertTrue( ibutton.equalCode( code, codezero ) );
 
   // Function testCode
   // Return values:
   //    1 - iButton code valid
   //   -1 - iButton code invalid, CRC8 failed
   //   -2 - iButton code invalid, all zeros
-  status = ibutton.testCode( code );         // Invalid code, all zeros
-  assertEqual( -2,  status );
-  status = ibutton.testCode( codezero );     // Invalid code, all zeros
-  assertEqual( -2,  status );
-  status = ibutton.testCode( codecrcfail );  // Invalid code, CRC failed
-  assertEqual( -1,  status );
-  status = ibutton.testCode( codecrc );      // Valid code
-  assertEqual( 1,  status );
+  assertEqual( -2, ibutton.testCode( code ) );        // Invalid code, all zeros
+  assertEqual( -2, ibutton.testCode( codezero ) );    // Invalid code, all zeros
+  assertEqual( -1, ibutton.testCode( codecrcfail ) ); // Invalid code, CRC failed
+  assertEqual( 1, ibutton.testCode( codecrc ) );      // Valid code
 
   // Function equalCode
   // Return values:
   //   true - The two iButtonCode's are equal
   //   false - The two iButtonCode's are *NOT* equal
-  equal = ibutton.equalCode( codezero, codecrc );
-  assertFalse( equal );
-  equal = ibutton.equalCode( codezero, codecrcfail );
-  assertFalse( equal );
-  equal = ibutton.equalCode( codecrc, codecrcfail );
-  assertFalse( equal );
+  assertFalse( ibutton.equalCode( codezero, codecrc ) );
+  assertFalse( ibutton.equalCode( codezero, codecrcfail ) );
+  assertFalse( ibutton.equalCode( codecrc, codecrcfail ) );
 
-  equal = ibutton.equalCode( codezero, codezero );
-  assertTrue( equal );
-  equal = ibutton.equalCode( codecrc, codecrc );
-  assertTrue( equal );
-  equal = ibutton.equalCode( codecrcfail, codecrcfail );
-  assertTrue( equal );
+  assertTrue( ibutton.equalCode( codezero, codezero ) );
+  assertTrue( ibutton.equalCode( codecrc, codecrc ) );
+  assertTrue( ibutton.equalCode( codecrcfail, codecrcfail ) );
 
   // Function printCode
   GodmodeState* state = GODMODE();
 
-  state->serialPort[0].dataOut = "";
+  state -> serialPort[0].dataOut = "";
   ibutton.printCode( codezero );
   assertEqual( "00 00 00 00 00 00 00 00", state -> serialPort[0].dataOut );
-  state->serialPort[0].dataOut = "";
+  state -> serialPort[0].dataOut = "";
   ibutton.printCode( codecrc );
   assertEqual( "01 0B 15 1F 29 33 3D E8", state -> serialPort[0].dataOut );
-  state->serialPort[0].dataOut = "";
+  state -> serialPort[0].dataOut = "";
   ibutton.printCode( codecrcfail );
   assertEqual( "01 0B 15 1F 29 33 3D 47", state -> serialPort[0].dataOut );
 
-  state->serialPort[0].dataOut = "";
+  state -> serialPort[0].dataOut = "";
   ibutton.printCode( codecrc, false );
   assertEqual( "01 0B 15 1F 29 33 3D E8", state -> serialPort[0].dataOut );
-  state->serialPort[0].dataOut = "";
+  state -> serialPort[0].dataOut = "";
   ibutton.printCode( codecrcfail, false );
   assertEqual( "01 0B 15 1F 29 33 3D 47", state -> serialPort[0].dataOut );
 
-  state->serialPort[0].dataOut = "";
+  state -> serialPort[0].dataOut = "";
   ibutton.printCode( codecrc, true );
   assertEqual( "E8 3D 33 29 1F 15 0B 01", state -> serialPort[0].dataOut );
-  state->serialPort[0].dataOut = "";
+  state -> serialPort[0].dataOut = "";
   ibutton.printCode( codecrcfail, true );
   assertEqual( "47 3D 33 29 1F 15 0B 01", state -> serialPort[0].dataOut );
 
