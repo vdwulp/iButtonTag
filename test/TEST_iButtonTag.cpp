@@ -16,8 +16,8 @@ unittest( iButtonTag_basics ) {
   for( uint8_t i = 0; i < 8; i++ ) {
     code[i] = 0x00;
     codezero[i] = 0x00;
-    codecrc[i] = i + 1;
-    codecrcfail[i] = i + 1;
+    codecrc[i] = 10 * i + 1;
+    codecrcfail[i] = 10 * i + 1;
   }
   codecrc[7] = OneWire::crc8( codecrc, 7 );
 
@@ -25,6 +25,11 @@ unittest( iButtonTag_basics ) {
   iButtonTag ibutton( 2 );
 
   // Function readCode
+  status = ibutton.readCode( code );
+  equal = ibutton.equalCode( code, codezero );
+  assertEqual( 0,  status ); // No iButton detected
+  assertTrue( equal );
+
   status = ibutton.readCode( code, false );
   equal = ibutton.equalCode( code, codezero );
   assertEqual( 0,  status ); // No iButton detected
@@ -58,7 +63,7 @@ unittest( iButtonTag_basics ) {
   assertEqual( -1,  status );
   status = ibutton.testCode( codecrc );      // Valid code
   assertEqual( 1,  status );
-  
+
   // Function equalCode
   // Return values:
   //   true - The two iButtonCode's are equal
@@ -77,11 +82,26 @@ unittest( iButtonTag_basics ) {
   equal = ibutton.equalCode( codecrcfail, codecrcfail );
   assertTrue( equal );
 
-  // Function printCode  ** Test of 'godmode' **
+  // Function printCode
   GodmodeState* state = GODMODE();
+
   ibutton.printCode( codezero );
-  assertEqual("00 00 00 00 00 00 00 00", state->serialPort[0].dataOut);
-  
+  assertEqual( "00 00 00 00 00 00 00 00", state -> serialPort[0].dataOut );
+  ibutton.printCode( codecrc );
+  assertEqual( "01 0B 15 1F 29 33 3D E8", state -> serialPort[0].dataOut );
+  ibutton.printCode( codecrcfail );
+  assertEqual( "01 0B 15 1F 29 33 3D 47", state -> serialPort[0].dataOut );
+
+  ibutton.printCode( codecrc, false );
+  assertEqual( "01 0B 15 1F 29 33 3D E8", state -> serialPort[0].dataOut );
+  ibutton.printCode( codecrcfail, false );
+  assertEqual( "01 0B 15 1F 29 33 3D 47", state -> serialPort[0].dataOut );
+
+  ibutton.printCode( codecrc, true );
+  assertEqual( "E8 3D 33 29 1F 15 0B 01", state -> serialPort[0].dataOut );
+  ibutton.printCode( codecrcfail, true );
+  assertEqual( "47 3D 33 29 1F 15 0B 01", state -> serialPort[0].dataOut );
+
 }
 
 unittest_main()
