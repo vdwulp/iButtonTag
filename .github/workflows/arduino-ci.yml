@@ -68,6 +68,7 @@ jobs:
         env:
           BUNDLE_GEMFILE: ./test/arduino-ci.gemfile
         run: |
+          cp ./test/test/arduino-ci.gemfile Gemfile
           bundle install
 
       - name: List repository contents (for debugging)
