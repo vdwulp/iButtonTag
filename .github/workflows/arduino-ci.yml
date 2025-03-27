@@ -65,6 +65,8 @@ jobs:
           gem install bundler
 
       - name: Install dependencies
+        env:
+          BUNDLE_GEMFILE: ./.github/workflows/arduino-ci.gemfile
         run: |
           bundle install
 
