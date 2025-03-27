@@ -1,6 +1,12 @@
 name: Arduino-CI
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - '**.h'
+      - '**.cpp'
+      - '**.ino'
+  pull_request:
 
 jobs:
   test:
