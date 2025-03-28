@@ -1,4 +1,4 @@
-// SA van der Wulp    | March 26, 2025
+// SA van der Wulp    | March 28, 2025
 // Copyright (c) 2025 | MIT License
 // https://github.com/vdwulp/iButtonTag
 
@@ -34,8 +34,7 @@ int8_t iButtonTag::readCode( uint8_t* code, bool old /* = false */ ) {
   // - Connected devices will assert presence with a pulse
   // - Returns 1 if at least one device is present, 0 otherwise
   // - Exit with status 0 when no device asserted presence
-  int b = _wire -> reset();
-  if ( b == 0 ) return 0;
+  if ( _wire -> reset() == 0 ) return 0;
 
   // Issue READ ROM command to the OneWire
   // - 0x33 is protocol standard
@@ -63,8 +62,7 @@ int8_t iButtonTag::readCodes() {
   // - Connected devices will assert presence with a pulse
   // - Returns 1 if at least one device is present, 0 otherwise
   // - Exit with status 0 when no device asserted presence
-  int b = _wire -> reset();
-  if ( b == 0 ) return 0;
+  if ( _wire -> reset() == 0 ) return 0;
 
   // Reset search domain on OneWire
   _wire -> reset_search();
@@ -93,8 +91,7 @@ int8_t iButtonTag::nextCode( uint8_t* code ) {
   // Search for the next identification code on OneWire
   // - Returns 1 when a code is found, 0 when there are no more iButtons
   // - Exit with status 0 when no more iButtons are detected
-  int b = _wire -> search( code );
-  if ( b == 0 ) return 0;
+  if ( _wire -> search( code ) == 0 ) return 0;
 
   // Test the identifying code and return result
   return testCode( code );
@@ -152,12 +149,10 @@ bool iButtonTag::equalCode( const uint8_t* a, const uint8_t* b ) {
 // reversed (reverse = true) to match the sequence fysically engraved on many
 // iButtons.
 void iButtonTag::printCode( const uint8_t* code, bool reverse /* = false */ ) {
-  iButtonCode printable;
-  for( uint8_t i = 0; i < 8; i++ ) printable[i] = code[reverse?7-i:i];
-
   for( uint8_t i = 0; i < 8; i++ ) {
-    if ( printable[i] < 0x10 ) Serial.print( "0" );
-    Serial.print( printable[i], HEX );
+    uint8_t j = reverse ? 7 - i : i;
+    if ( code[j] < 0x10 ) Serial.print( "0" );
+    Serial.print( code[j], HEX );
     if ( i < 7 ) Serial.print( " " );
   }
 }
