@@ -4,7 +4,7 @@
 [![Arduino-lint](https://github.com/vdwulp/iButtonTag/actions/workflows/arduino-lint.yml/badge.svg)](https://github.com/marketplace/actions/arduino-arduino-lint-action)
 [![JSON-syntax](https://github.com/vdwulp/iButtonTag/actions/workflows/json-syntax.yml/badge.svg)](https://github.com/marketplace/actions/json-syntax-check)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/vdwulp/iButtonTag/blob/main/LICENSE)
-[![GitHub release](https://img.shields.io/github/v/release/vdwulp/iButtonTag.svg?maxAge=3600)](https://github.com/vdwulp/iButtonTag/releases)
+[![GitHub release](https://img.shields.io/github/v/release/vdwulp/iButtonTag.svg)](https://github.com/vdwulp/iButtonTag/releases/latest)
 
 An Arduino library handling iButton identification tags.
 
@@ -29,10 +29,10 @@ An Arduino library handling iButton identification tags.
 _If you don't see the Install All button mentioned in step 5, you have an older Arduino IDE (<1.8.10). Consider upgrading the IDE, or repeat steps 1 to 4 above to install OneWire library. In step 3 search for "OneWire"._
 
 ### Manual installation
-1. Download the latest release ZIP file from [iButtonTag releases](https://github.com/vdwulp/iButtonTag/releases)
+1. Download the latest release ZIP file from [iButtonTag releases](https://github.com/vdwulp/iButtonTag/releases/latest)
 2. In Arduino IDE, go to Sketch > Include Library > Add .ZIP Library...
 3. Select the downloaded ZIP file
-4. Repeat steps above to install required _OneWire_ library; in step 1 download ZIP file from [OneWire releases](https://github.com/PaulStoffregen/OneWire/releases)
+4. Repeat steps above to install required _OneWire_ library; in step 1 download ZIP file from [OneWire releases](https://github.com/PaulStoffregen/OneWire/releases/latest)
 
 ## Basic Usage
 
@@ -70,7 +70,7 @@ _If you don't see the Install All button mentioned in step 5, you have an older 
 
 ## Advanced Features
 
-- Multiple iButton probes on the same 1-Wire bus
+- Multiple iButton probes on the same 1-Wire data line
 - Utility functions to print, test code validity and test code equality
 
 ## Hardware notes
@@ -83,6 +83,7 @@ _If you don't see the Install All button mentioned in step 5, you have an older 
 
 ### iButton probes
 - iButton probes come in many forms, some have 1 or 2 build-in indicator LED's.
+- iButton probes have at least two wires: a data line and a ground. Other wires are for indicator LED's.
 
 ### No probe? No problem...
 
