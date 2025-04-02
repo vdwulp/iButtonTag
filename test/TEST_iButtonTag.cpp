@@ -101,6 +101,31 @@ unittest( iButtonTag_basics ) {
   ibutton.printCode( codecrcfail, true );
   assertEqual( "47 3D 33 29 1F 15 0B 01", state -> serialPort[0].dataOut );
 
+  // Function updateChecksum
+  ibutton.updateChecksum( codecrcfail );
+  assertTrue( ibutton.equalCode( codecrc, codecrcfail ) );
+
+  // Function detectWritableType
+  // Return values:
+  //   >0 - iButton writable type found as indicated by type constant
+  //    0 - iButton writable type unknown, no detectable writable type found
+  //   -1 - No iButton detected
+  assertEqual( -1, ibutton.detectWritableType() );
+
+  // Function writeCode
+  // Return values:
+  //    1 - Writing procedure finished successfully
+  //    0 - No iButton detected at some time during procedure
+  //   -1 - iButton code invalid, CRC8 failed
+  //   -2 - iButton code invalid, all zeros
+  //  -11 - iButton writable type invalid, supplied value out of range
+  //  -12 - iButton writable type not detectable, supply specific type constant
+  //  -13 - iButton writable type incorrect, unexpected response while testing
+  //  -21 - Writing code failed, code read after writing procedure is not equal
+  //  -22 - Writing code failed, unexpected response while writing
+  assertEqual( 0, ibutton.writeCode( codecrc ) );
+  assertEqual( -11, ibutton.writeCode( IBUTTON_MAXTYPE + 1 ) );
+
 }
 
 unittest_main()
