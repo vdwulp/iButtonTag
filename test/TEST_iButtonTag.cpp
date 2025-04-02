@@ -1,4 +1,4 @@
-// SA van der Wulp    | March 27, 2025
+// SA van der Wulp    | April 2, 2025
 // Copyright (c) 2025 | MIT License
 // https://github.com/vdwulp/iButtonTag
 
@@ -101,10 +101,6 @@ unittest( iButtonTag_basics ) {
   ibutton.printCode( codecrcfail, true );
   assertEqual( "47 3D 33 29 1F 15 0B 01", state -> serialPort[0].dataOut );
 
-  // Function updateChecksum
-  ibutton.updateChecksum( codecrcfail );
-  assertTrue( ibutton.equalCode( codecrc, codecrcfail ) );
-
   // Function detectWritableType
   // Return values:
   //   >0 - iButton writable type found as indicated by type constant
@@ -123,8 +119,24 @@ unittest( iButtonTag_basics ) {
   //  -13 - iButton writable type incorrect, unexpected response while testing
   //  -21 - Writing code failed, code read after writing procedure is not equal
   //  -22 - Writing code failed, unexpected response while writing
-  assertEqual( 0, ibutton.writeCode( codecrc ) + 40 );
+  assertEqual(   0, ibutton.writeCode( codecrc ) );
+  assertEqual(  -1, ibutton.writeCode( codecrcfail ) );
+  assertEqual(  -2, ibutton.writeCode( codezero ) );
+  assertEqual(   0, ibutton.writeCode( codecrc, IBUTTON_UNKNOWN ) );
+  assertEqual(   0, ibutton.writeCode( codecrc, IBUTTON_RW1990V1 ) );
+  assertEqual(   0, ibutton.writeCode( codecrc, IBUTTON_RW1990V2 ) );
+  assertEqual(   0, ibutton.writeCode( codecrc, IBUTTON_RW2004 ) );
+  assertEqual(   0, ibutton.writeCode( codecrc, IBUTTON_TM01 ) );
   assertEqual( -11, ibutton.writeCode( codecrc, IBUTTON_MAXTYPE + 1 ) );
+  assertEqual(   0, ibutton.writeCode( codecrcfail, IBUTTON_UNKNOWN, false ) );
+  assertEqual(   0, ibutton.writeCode( codecrcfail, IBUTTON_RW1990V1, false ) );
+  assertEqual(   0, ibutton.writeCode( codecrcfail, IBUTTON_RW1990V2, false ) );
+  assertEqual(   0, ibutton.writeCode( codecrcfail, IBUTTON_RW2004, false ) );
+  assertEqual(   0, ibutton.writeCode( codecrcfail, IBUTTON_TM01, false ) );
+
+  // Function updateChecksum - last because it changes codecrcfail
+  ibutton.updateChecksum( codecrcfail );
+  assertTrue( ibutton.equalCode( codecrc, codecrcfail ) );
 
 }
 
