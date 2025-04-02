@@ -239,7 +239,7 @@ int8_t iButtonTag::detectWritableType() {
 //  -21 - Writing code failed, code read after writing procedure is not equal
 //  -22 - Writing code failed, unexpected response while writing
 int8_t iButtonTag::writeCode( const uint8_t* code,
-                              uint8_t type /* = IBUTTON_UNKNOWN */,
+                              int8_t type /* = IBUTTON_UNKNOWN */,
                               bool check /* = true */ ) {
 
   int8_t val;
