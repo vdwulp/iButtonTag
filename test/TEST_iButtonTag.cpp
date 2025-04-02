@@ -124,7 +124,7 @@ unittest( iButtonTag_basics ) {
   //  -21 - Writing code failed, code read after writing procedure is not equal
   //  -22 - Writing code failed, unexpected response while writing
   assertEqual( 0, ibutton.writeCode( codecrc ) );
-  assertEqual( -11, ibutton.writeCode( IBUTTON_MAXTYPE + 1 ) );
+  assertEqual( -11, ibutton.writeCode( codecrc, IBUTTON_MAXTYPE + 1 ) );
 
 }
 
