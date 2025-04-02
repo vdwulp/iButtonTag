@@ -249,7 +249,7 @@ int8_t iButtonTag::writeCode( const uint8_t* code,
   }
 
   // Check valid type argument - always
-  if ( type < 0 || type > IBUTTON_MAXTYPE ) return -11; // Type out of range
+  if ( type > IBUTTON_MAXTYPE ) return -11; // Type out of range
 
   // Find out / check writable type
   if ( type == IBUTTON_UNKNOWN ) { // Run auto-detection routine
