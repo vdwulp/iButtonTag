@@ -242,33 +242,46 @@ int8_t iButtonTag::writeCode( const uint8_t* code,
                               uint8_t type /* = IBUTTON_UNKNOWN */,
                               bool check /* = true */ ) {
 
+  int8_t val;
+
   // Check code if checking is on
   if ( check ) {
-    int8_t t = testCode( code );
-    if ( t < 1 ) return t; // Invalid code (<0 or <1 ??)
+    val = testCode( code );
+    if ( val < 1 ) return val; // Invalid code
   }
 
   // Check valid type argument - always
-  if ( type > IBUTTON_MAXTYPE ) return -11; // Type out of range
+  if ( type > IBUTTON_MAXTYPE ) return -11;    // Type out of range
 
   // Find out / check writable type
-  if ( type == IBUTTON_UNKNOWN ) { // Run auto-detection routine
+  if ( type == IBUTTON_UNKNOWN ) {             // Run auto-detection routine
     type = detectWritableType();
     if ( type == IBUTTON_UNKNOWN ) return -12; // Unable to detect
     if ( type < 0 ) return 0;                  // No iButton detected
-  } else if ( check ) { // Check specified iButton tag type if checking is on
+  } else if ( check ) {                        // Check type if checking is on
     switch ( type ) {
-      case IBUTTON_RW1990V1: if ( !isWritableTypeRW1990V1() ) return -13; break;
-      case IBUTTON_RW1990V2: if ( !isWritableTypeRW1990V2() ) return -13; break;
-      case IBUTTON_RW2004:   if ( !isWritableTypeRW2004()   ) return -13; break;
-      case IBUTTON_TM01:     break;      // Non-detectable type, allow
-      default:               return -11; // Type out of range
+      case IBUTTON_RW1990V1:
+        val = isWritableTypeRW1990V1();
+        if ( val == 0 ) return -13;
+        if ( val == -1 ) return 0;
+        break;
+      case IBUTTON_RW1990V2:
+        val = isWritableTypeRW1990V2();
+        if ( val == 0 ) return -13;
+        if ( val == -1 ) return 0;
+        break;
+      case IBUTTON_RW2004:
+        val = isWritableTypeRW2004();
+        if ( val == 0 ) return -13;
+        if ( val == -1 ) return 0;
+        break;
+      case IBUTTON_TM01: break;                // Non-detectable type, allow
+      default: return -11;                     // Type out of range
     }
   }
 
   // Checks passed or turned off, run actual writing procedure
   switch ( type ) {
-
     case IBUTTON_RW1990V1:
       if ( writeCodeCommon( code, 0xD1, true ) == 0 ) return 0;
       break;
