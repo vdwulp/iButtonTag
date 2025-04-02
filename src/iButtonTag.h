@@ -40,7 +40,7 @@ class iButtonTag {
 
     // Functions for writing
     int8_t detectWritableType();
-    int8_t writeCode( const uint8_t*, uint8_t = IBUTTON_UNKNOWN, bool = true );
+    int8_t writeCode( const uint8_t*, int8_t = IBUTTON_UNKNOWN, bool = true );
 
   private:
     // OneWire instance
