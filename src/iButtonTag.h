@@ -10,12 +10,12 @@
 #include <OneWire.h>
 
 // Constants for iButton (re)writable tag types
-const uint8_t IBUTTON_UNKNOWN  = 0;
-const uint8_t IBUTTON_RW1990V1 = 1; // Models sold as RW1990, RW1990.1, ТМ08, ТМ08v2
-const uint8_t IBUTTON_RW1990V2 = 2; // Model sold as RW1990v2, RW1990.2
-const uint8_t IBUTTON_RW2004   = 3; // Models sold as RW2004, TM2004
-const uint8_t IBUTTON_TM01     = 4; // Model sold as TM01, TM01C - Non-detectable
-const uint8_t IBUTTON_MAXTYPE  = 4; // Always equal to maximum type constant
+const int8_t IBUTTON_UNKNOWN  = 0;
+const int8_t IBUTTON_RW1990V1 = 1; // Models sold as RW1990, RW1990.1, ТМ08, ТМ08v2
+const int8_t IBUTTON_RW1990V2 = 2; // Model sold as RW1990v2, RW1990.2
+const int8_t IBUTTON_RW2004   = 3; // Models sold as RW2004, TM2004
+const int8_t IBUTTON_TM01     = 4; // Model sold as TM01, TM01C - Non-detectable
+const int8_t IBUTTON_MAXTYPE  = 4; // Always equal to maximum type constant
 
 // Type definition
 typedef uint8_t iButtonCode[8];
