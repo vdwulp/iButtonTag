@@ -1,4 +1,4 @@
-// SA van der Wulp    | April 2, 2025
+// SA van der Wulp    | April 3, 2025
 // Copyright (c) 2025 | MIT License
 // https://github.com/vdwulp/iButtonTag
 
@@ -251,7 +251,7 @@ int8_t iButtonTag::writeCode( const uint8_t* code,
   }
 
   // Check valid type argument - always
-  if ( type > IBUTTON_MAXTYPE ) return -11;    // Type out of range
+  if ( type > IBUTTON_MAXWRITABLE ) return -11;    // Type out of range
 
   // Find out / check writable type
   if ( type == IBUTTON_UNKNOWN ) {             // Run auto-detection routine
