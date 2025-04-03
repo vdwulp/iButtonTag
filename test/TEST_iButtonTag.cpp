@@ -127,12 +127,13 @@ unittest( iButtonTag_basics ) {
   assertEqual(   0, ibutton.writeCode( codecrc, IBUTTON_RW1990V2 ) );
   assertEqual(   0, ibutton.writeCode( codecrc, IBUTTON_RW2004 ) );
   assertEqual(   0, ibutton.writeCode( codecrc, IBUTTON_TM01 ) );
-  assertEqual( -11, ibutton.writeCode( codecrc, IBUTTON_MAXTYPE + 1 ) );
+  assertEqual( -11, ibutton.writeCode( codecrc, IBUTTON_MAXWRITABLE + 1 ) );
   assertEqual(   0, ibutton.writeCode( codecrcfail, IBUTTON_UNKNOWN, false ) );
   assertEqual(   0, ibutton.writeCode( codecrcfail, IBUTTON_RW1990V1, false ) );
   assertEqual(   0, ibutton.writeCode( codecrcfail, IBUTTON_RW1990V2, false ) );
   assertEqual(   0, ibutton.writeCode( codecrcfail, IBUTTON_RW2004, false ) );
   assertEqual(   0, ibutton.writeCode( codecrcfail, IBUTTON_TM01, false ) );
+  assertEqual( -11, ibutton.writeCode( codecrcfail, IBUTTON_MAXWRITABLE + 1, false ) );
 
   // Function updateChecksum - last because it changes codecrcfail
   ibutton.updateChecksum( codecrcfail );
