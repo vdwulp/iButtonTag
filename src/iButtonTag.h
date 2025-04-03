@@ -1,4 +1,4 @@
-// SA van der Wulp    | April 2, 2025
+// SA van der Wulp    | April 3, 2025
 // Copyright (c) 2025 | MIT License
 // https://github.com/vdwulp/iButtonTag
 
@@ -10,12 +10,12 @@
 #include <OneWire.h>
 
 // Constants for iButton (re)writable tag types
-const int8_t IBUTTON_UNKNOWN  = 0;
-const int8_t IBUTTON_RW1990V1 = 1; // Models sold as RW1990, RW1990.1, ТМ08, ТМ08v2
-const int8_t IBUTTON_RW1990V2 = 2; // Model sold as RW1990v2, RW1990.2
-const int8_t IBUTTON_RW2004   = 3; // Models sold as RW2004, TM2004
-const int8_t IBUTTON_TM01     = 4; // Model sold as TM01, TM01C - Non-detectable
-const int8_t IBUTTON_MAXTYPE  = 4; // Always equal to maximum type constant
+#define IBUTTON_UNKNOWN     0
+#define IBUTTON_RW1990V1    1 // Models sold as RW1990, RW1990.1, ТМ08, ТМ08v2
+#define IBUTTON_RW1990V2    2 // Model sold as RW1990v2, RW1990.2
+#define IBUTTON_RW2004      3 // Models sold as RW2004, TM2004
+#define IBUTTON_TM01        4 // Model sold as TM01, TM01C - Non-detectable
+#define IBUTTON_MAXWRITABLE 4 // Always equal to maximum type constant
 
 // Type definition
 typedef uint8_t iButtonCode[8];
