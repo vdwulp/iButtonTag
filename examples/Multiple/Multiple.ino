@@ -23,10 +23,10 @@ void setup( void ) {
 /*
  * Main function, read identification code of possibly _multiple_ iButton tags.
  *
- * It's possible to connect multiple iButton probes to just one pin. If there
- * multiple probes connected there is a chance multiple iButtons are presented
- * at once. In this case the identification codes must be read in a different
- * way.
+ * It's possible to connect multiple iButton probes to the same data line pin
+ * and ground. If there are multiple probes connected there is a chance multiple
+ * iButtons are presented at the same time. In this case the identification
+ * codes must be read in a different way.
  */
 void loop(void)
 {
@@ -64,7 +64,7 @@ void loop(void)
         Serial.println( "iButton code invalid" );
         break;
 
-      default: // Unknown - Shouldn't happen
+      default: // Unknown, shouldn't happen
         Serial.println( "Unknown status" );
 
     }
