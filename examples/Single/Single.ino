@@ -1,4 +1,4 @@
-// SA van der Wulp    | March 26, 2025
+// SA van der Wulp    | April 4, 2025
 // Copyright (c) 2025 | MIT License
 // https://github.com/vdwulp/iButtonTag
 
@@ -32,12 +32,12 @@ void loop(void)
   Serial.print( "Reading... " );
   int8_t status = ibutton.readCode( code );
 
-  // Variable /status/ will now indicate the succes
+  // Variable _status_ will now indicate the succes
   switch( status ) {
 
     case 1: // Succes
       Serial.print( "iButton code read succesfully: " );
-      ibutton.printCode( code, true ); // Variable _code_ contains the ID-code
+      ibutton.printCode( code ); // Variable _code_ contains the ID-code
       Serial.println();
       break;
 
