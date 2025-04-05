@@ -71,7 +71,6 @@ _If you don't see the Install All button mentioned in step 5, you have an older 
    ```
 
 ## 🏃 Advanced Features
-
 - Writing new identification code to (re)writable iButton tag models
 - Reading multiple iButton probes on the same 1-Wire data line
 
@@ -100,18 +99,15 @@ iButton probes are essentially just connecting the two parts of an iButton _cyli
 ## 📓 Documentation & References
 
 ### Articles
-
-- [What is an iButton Device?](https://www.analog.com/en/resources/technical-articles/what-is-an-ibutton-device.html)
+- [What is an iButton Device?](https://www.analog.com/media/en/technical-documentation/tech-articles/what-is-an-ibutton-device.pdf)
 - [How to Power the Extended Features of 1-Wire Devices](https://www.analog.com/media/en/technical-documentation/tech-articles/how-to-power-the-extended-features-of-1wire-devices.pdf)
 
 ### Data sheets
-
 - [Book of iButton Standards](https://www.analog.com/media/en/technical-documentation/tech-articles/book-of-ibuttonreg-standards.pdf)
 - [DS1990A](https://www.analog.com/media/en/technical-documentation/data-sheets/ds1990a.pdf)
 - [DS1990R](https://www.analog.com/media/en/technical-documentation/data-sheets/DS1990R-DS1990R-F5.pdf)
 
 ## 🙏 Thanks
-
 - The creator(s) of the [OneWire](https://github.com/PaulStoffregen/OneWire) library iButtonTag depends on. It's a very solid implementation of the 1-Wire protocol. I learned a lot by studying the protocol documentation in combination with the source of this library.
 - The creator(s) of the [DallasTemperature](https://github.com/milesburton/Arduino-Temperature-Control-Library) library. When studying the 1-Wire protocol, working with the Dallas DS18B20 Temperature Sensor made everything more practical. In this period I also tried to contribute to this library.
 
