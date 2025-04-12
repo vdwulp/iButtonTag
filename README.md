@@ -19,6 +19,8 @@ An Arduino library handling iButton identification tags.
 | TM01, TM01C                              | :heavy_check_mark: | :heavy_check_mark: |
 | Many other iButton tags                  | :heavy_check_mark: |                    |
 
+<img src="https://vdwulp.github.io/iButtonTag/iButtonTag-TM1990A.png" alt="iButton tags model TM1990A" width=220 height=220><img src="https://vdwulp.github.io/iButtonTag/iButtonTag-RW1990.png" alt="iButton tags model TM1990A" width=220 height=220><img src="https://vdwulp.github.io/iButtonTag/iButtonProbe-OneLed.png" alt="iButton probe flat model with indicator LED" width=220 height=220>
+
 ## ✈️ Installation
 
 ### Using Arduino IDE Library Manager - _Recommended!_
