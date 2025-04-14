@@ -10,16 +10,16 @@ An Arduino library handling iButton identification tags.
 
 ## 👍 Supported Devices
 
-| Model                                    |  Reading ID-code   |  Writing ID-code   |
-|:-----------------------------------------|:------------------:|:------------------:|
-| DS1990, DS1990A, DS1990R, TM1990A        |         ✔️         |                    |
-| RW1990, RW1990.1, RW1990v1, TM08, TM08v2 |         ✔️         |         ✔️        |
-| RW1990.2, RW1990v2                       |         ✔️         |         ✔️        |
-| RW2004, TM2004                           |         ✔️         |         ✔️        |
-| TM01, TM01C                              |         ✔️         |         ✔️        |
-| Many other iButton tags                  |         ✔️         |                    |
+| Model                                    | Reading ID-code | Writing ID-code |
+|:-----------------------------------------|:---------------:|:---------------:|
+| DS1990, DS1990A, DS1990R, TM1990A        | ✔️ |    |
+| RW1990, RW1990.1, RW1990v1, TM08, TM08v2 | ✔️ | ✔️ |
+| RW1990.2, RW1990v2                       | ✔️ | ✔️ |
+| RW2004, TM2004                           | ✔️ | ✔️ |
+| TM01, TM01C                              | ✔️ | ✔️ |
+| Many other iButton tags                  | ✔️ |    |
 
-<img src="https://vdwulp.github.io/iButtonTag/iButtonTag-TM1990A.png" alt="iButton tags model TM1990A" width=220 height=220><img src="https://vdwulp.github.io/iButtonTag/iButtonTag-RW1990.png" alt="iButton tags model TM1990A" width=220 height=220><img src="https://vdwulp.github.io/iButtonTag/iButtonProbe-OneLed.png" alt="iButton probe flat model with indicator LED" width=220 height=220>
+<img src="https://vdwulp.github.io/iButtonTag/iButtonTag-TM1990A.png" alt="iButton tags model TM1990A" width=220 height=220><img src="https://vdwulp.github.io/iButtonTag/iButtonTag-RW1990.png" alt="iButton tag model RW1990" width=220 height=220><img src="https://vdwulp.github.io/iButtonTag/iButtonProbe-OneLed.png" alt="iButton probe flat model with indicator LED" width=220 height=220>
 
 ## ✈️ Installation
 
@@ -81,24 +81,21 @@ _If you don't see the Install All button mentioned in step 5, you have an older 
 ### iButton identification tags
 - Many iButton tags have their identification code engraved on them in hexadecimal: in the center the _reversed_ tag specific 6-byte code, above it on the right side 1-byte family code and on the left side 1-byte checksum. When read by this library the order is: family code - tag specific code - checksum.
 - Official iButton identification tags all have a unique identification code that _cannot_ be changed. However, this library supports writing a new code to multiple types of (re)writable _compatible_ tags.
-- DS1990 can't be used with multiple identification tags on a single data line and requires special handling. For details see comments on function _readCode_ in _iButtonTag.ccp_ source file.
+- DS1990 (not DS1990A or DS1990R) can't be used with multiple identification tags on a single data line and requires special handling. For details see comments on function [readCode](https://vdwulp.github.io/iButtonTag/REFERENCE.html#readCode) in [reference documentation](https://vdwulp.github.io/iButtonTag/REFERENCE.html).
 
 ### Pull-up resistor
 - The official recommendation is to use a 4700 Ω pull-up resistor between the 1-Wire data line and Arduino 5V pin when _reading_ from an iButton tag.
 - Writing a new code to (re)writable iButton tags may require _more power_ for a successful and persistent result. To get more power to the tag, a 2200 Ω pull-up resistor between the 1-Wire data line and Arduino 5V pin has been tested to be a good value.
 
 ### iButton probes
-- iButton probes come in many forms, some have LED-indicator(s) with one or two colors.
-- iButton probes have at least two wires: a data line and a ground. Other wires are for indicator LED(s).
-- iButton probes with two-color LED-indicator usualy have one _bi-directional_ LED that changes color when polarity on two available LED-wires is reversed.
-
-### No probe? No problem...
-iButton probes are essentially just connecting the two parts of an iButton _cylinder_ to wires, so you can simulate a probe and setup like this:
-- Connect the _flat circular surface_ of the iButton to an Arduino digital pin, this is the 1-Wire data line.
-- Connect a 4k7 kΩ pull-up resistor between the 1-Wire data line and Arduino 5V pin.
-- Connect the _side of the cylinder_ of the iButton to an Arduino ground (GND) pin.
+- iButton probes come in many forms, some have LED-indicator(s) with one or two colors, see [some examples](https://vdwulp.github.io/iButtonTag/probes.html#examples).
+- No probe? No problem... see instructions in [probe documentation](https://vdwulp.github.io/iButtonTag/probes.html#noprobe).
 
 ## 📓 Documentation & References
+
+### Documentation
+- Complete iButtonTag library [reference documentation](https://vdwulp.github.io/iButtonTag/REFERENCE.html) with detailed information on all types, constants and functions.
+- iButtonTag library [GitHub repository](https://github.com/vdwulp/iButtonTag).
 
 ### Articles
 - [What is an iButton Device?](https://www.analog.com/media/en/technical-documentation/tech-articles/what-is-an-ibutton-device.pdf)
