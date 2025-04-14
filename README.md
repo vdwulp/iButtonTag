@@ -42,7 +42,7 @@ _If you don't see the Install All button mentioned in step 5, you have an older 
 
 ### Hardware Setup
 - Connect data line of iButton probe to an Arduino digital pin, this is the 1-Wire data line.
-- Connect a 4k7 kΩ pull-up resistor between the 1-Wire data line and Arduino 5V pin.
+- Connect a 2200 Ω to 4700 Ω pull-up resistor between the 1-Wire data line and Arduino 5V pin.
 - Connect ground line of iButton probe to an Arduino ground (GND) pin.
 
 ### Code Example
