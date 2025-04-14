@@ -1,10 +1,11 @@
-name: Doc to GitHub Pages
+name: GitHub Pages
 
 on:
   push:
+    branches:
+      - 'main'
     paths:
       - '**.md'
-  pull_request:
 
 jobs:
   GitHubPages:
