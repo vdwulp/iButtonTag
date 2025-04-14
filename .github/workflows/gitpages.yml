@@ -18,4 +18,5 @@ jobs:
           source-files: 'README.md'
           destination-username: 'vdwulp'
           destination-repository: 'vdwulp.github.io'
+          destination-branch: 'main'
           destination-directory: 'iButtonTag'
