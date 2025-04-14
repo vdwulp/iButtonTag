@@ -84,8 +84,8 @@ _If you don't see the Install All button mentioned in step 5, you have an older 
 - DS1990 can't be used with multiple identification tags on a single data line and requires special handling. For details see comments on function _readCode_ in _iButtonTag.ccp_ source file.
 
 ### Pull-up resistor
-- The official recommendation is to use a 4k7 kΩ pull-up resistor between the 1-Wire data line and Arduino 5V pin when _reading_ from an iButton tag. If you're using a 3.3V device, you'll need to adjust the resistor value accordingly: use a lower value resistor.
-- Writing a new code to (re)writable iButton tags may require _more power_ for a successful and persistent result. To get more power to the tag, use a lower value resistor. Read more background on this in the article _How to Power the Extended Features of 1-Wire Devices_ linked below.
+- The official recommendation is to use a 4700 Ω pull-up resistor between the 1-Wire data line and Arduino 5V pin when _reading_ from an iButton tag.
+- Writing a new code to (re)writable iButton tags may require _more power_ for a successful and persistent result. To get more power to the tag, a 2200 Ω pull-up resistor between the 1-Wire data line and Arduino 5V pin has been tested to be a good value.
 
 ### iButton probes
 - iButton probes come in many forms, some have LED-indicator(s) with one or two colors.
