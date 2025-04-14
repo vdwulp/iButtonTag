@@ -1,4 +1,4 @@
-name: GitHub Pages
+name: GitHubPages
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUBPAGES }}
         with:
-          source-files: 'README.md' 'doc/REFERENCE.md' 'doc/probes.md'
+          source-files: 'README.md doc/REFERENCE.md doc/probes.md'
           destination-username: 'vdwulp'
           destination-repository: 'vdwulp.github.io'
           destination-branch: 'main'
