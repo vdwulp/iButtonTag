@@ -114,6 +114,6 @@ iButton probes are essentially just connecting the two parts of an iButton _cyli
 - The creator(s) of the [DallasTemperature](https://github.com/milesburton/Arduino-Temperature-Control-Library) library. When studying the 1-Wire protocol, working with the Dallas DS18B20 Temperature Sensor made everything more practical. In this period I also tried to contribute to this library.
 
 ## 🗒️ License
-MIT License | Copyright (c) 2025 SA van der Wulp
+MIT License, full text available in [LICENSE](https://github.com/vdwulp/iButtonTag/blob/main/LICENSE) file.
 
-Full license text available in [LICENSE](LICENSE) file.
+Copyright (c) 2025 SA van der Wulp
