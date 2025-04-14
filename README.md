@@ -12,12 +12,12 @@ An Arduino library handling iButton identification tags.
 
 | Model                                    |  Reading ID-code   |  Writing ID-code   |
 |:-----------------------------------------|:------------------:|:------------------:|
-| DS1990, DS1990A, DS1990R, TM1990A        | :heavy_check_mark: |                    |
-| RW1990, RW1990.1, RW1990v1, TM08, TM08v2 | :heavy_check_mark: | :heavy_check_mark: |
-| RW1990.2, RW1990v2                       | :heavy_check_mark: | :heavy_check_mark: |
-| RW2004, TM2004                           | :heavy_check_mark: | :heavy_check_mark: |
-| TM01, TM01C                              | :heavy_check_mark: | :heavy_check_mark: |
-| Many other iButton tags                  | :heavy_check_mark: |                    |
+| DS1990, DS1990A, DS1990R, TM1990A        |         ✔️         |                    |
+| RW1990, RW1990.1, RW1990v1, TM08, TM08v2 |         ✔️         |         ✔️        |
+| RW1990.2, RW1990v2                       |         ✔️         |         ✔️        |
+| RW2004, TM2004                           |         ✔️         |         ✔️        |
+| TM01, TM01C                              |         ✔️         |         ✔️        |
+| Many other iButton tags                  |         ✔️         |                    |
 
 <img src="https://vdwulp.github.io/iButtonTag/iButtonTag-TM1990A.png" alt="iButton tags model TM1990A" width=220 height=220><img src="https://vdwulp.github.io/iButtonTag/iButtonTag-RW1990.png" alt="iButton tags model TM1990A" width=220 height=220><img src="https://vdwulp.github.io/iButtonTag/iButtonProbe-OneLed.png" alt="iButton probe flat model with indicator LED" width=220 height=220>
 
