@@ -1,0 +1,23 @@
+name: GitHub Pages
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - '**.md'
+
+jobs:
+  GitHubPages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push documentation to GitHub Pages
+        uses: nkoppel/push-files-to-another-repository@v1.1.4
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUBPAGES }}
+        with:
+          source-files: 'README.md'
+          destination-username: 'vdwulp'
+          destination-repository: 'vdwulp.github.io'
+          destination-branch: 'main'
+          destination-directory: 'iButtonTag'
