@@ -12,12 +12,14 @@ An Arduino library handling iButton identification tags.
 
 | Model                                    |  Reading ID-code   |  Writing ID-code   |
 |:-----------------------------------------|:------------------:|:------------------:|
-| DS1990, DS1990A, DS1990R, TM1990A        | :heavy_check_mark: |                    |
-| RW1990, RW1990.1, RW1990v1, TM08, TM08v2 | :heavy_check_mark: | :heavy_check_mark: |
-| RW1990.2, RW1990v2                       | :heavy_check_mark: | :heavy_check_mark: |
-| RW2004, TM2004                           | :heavy_check_mark: | :heavy_check_mark: |
-| TM01, TM01C                              | :heavy_check_mark: | :heavy_check_mark: |
-| Many other iButton tags                  | :heavy_check_mark: |                    |
+| DS1990, DS1990A, DS1990R, TM1990A        |         ✔️         |                    |
+| RW1990, RW1990.1, RW1990v1, TM08, TM08v2 |         ✔️         |         ✔️        |
+| RW1990.2, RW1990v2                       |         ✔️         |         ✔️        |
+| RW2004, TM2004                           |         ✔️         |         ✔️        |
+| TM01, TM01C                              |         ✔️         |         ✔️        |
+| Many other iButton tags                  |         ✔️         |                    |
+
+<img src="https://vdwulp.github.io/iButtonTag/iButtonTag-TM1990A.png" alt="iButton tags model TM1990A" width=220 height=220><img src="https://vdwulp.github.io/iButtonTag/iButtonTag-RW1990.png" alt="iButton tags model TM1990A" width=220 height=220><img src="https://vdwulp.github.io/iButtonTag/iButtonProbe-OneLed.png" alt="iButton probe flat model with indicator LED" width=220 height=220>
 
 ## ✈️ Installation
 
@@ -40,7 +42,7 @@ _If you don't see the Install All button mentioned in step 5, you have an older 
 
 ### Hardware Setup
 - Connect data line of iButton probe to an Arduino digital pin, this is the 1-Wire data line.
-- Connect a 4k7 kΩ pull-up resistor between the 1-Wire data line and Arduino 5V pin.
+- Connect a 2200 Ω to 4700 Ω pull-up resistor between the 1-Wire data line and Arduino 5V pin.
 - Connect ground line of iButton probe to an Arduino ground (GND) pin.
 
 ### Code Example
@@ -71,7 +73,6 @@ _If you don't see the Install All button mentioned in step 5, you have an older 
    ```
 
 ## 🏃 Advanced Features
-
 - Writing new identification code to (re)writable iButton tag models
 - Reading multiple iButton probes on the same 1-Wire data line
 
@@ -83,8 +84,8 @@ _If you don't see the Install All button mentioned in step 5, you have an older 
 - DS1990 can't be used with multiple identification tags on a single data line and requires special handling. For details see comments on function _readCode_ in _iButtonTag.ccp_ source file.
 
 ### Pull-up resistor
-- The official recommendation is to use a 4k7 kΩ pull-up resistor between the 1-Wire data line and Arduino 5V pin when _reading_ from an iButton tag. If you're using a 3.3V device, you'll need to adjust the resistor value accordingly: use a lower value resistor.
-- Writing a new code to (re)writable iButton tags may require _more power_ for a successful and persistent result. To get more power to the tag, use a lower value resistor. Read more background on this in the article _How to Power the Extended Features of 1-Wire Devices_ linked below.
+- The official recommendation is to use a 4700 Ω pull-up resistor between the 1-Wire data line and Arduino 5V pin when _reading_ from an iButton tag.
+- Writing a new code to (re)writable iButton tags may require _more power_ for a successful and persistent result. To get more power to the tag, a 2200 Ω pull-up resistor between the 1-Wire data line and Arduino 5V pin has been tested to be a good value.
 
 ### iButton probes
 - iButton probes come in many forms, some have LED-indicator(s) with one or two colors.
@@ -100,23 +101,19 @@ iButton probes are essentially just connecting the two parts of an iButton _cyli
 ## 📓 Documentation & References
 
 ### Articles
-
-- [What is an iButton Device?](https://www.analog.com/en/resources/technical-articles/what-is-an-ibutton-device.html)
+- [What is an iButton Device?](https://www.analog.com/media/en/technical-documentation/tech-articles/what-is-an-ibutton-device.pdf)
 - [How to Power the Extended Features of 1-Wire Devices](https://www.analog.com/media/en/technical-documentation/tech-articles/how-to-power-the-extended-features-of-1wire-devices.pdf)
 
 ### Data sheets
-
 - [Book of iButton Standards](https://www.analog.com/media/en/technical-documentation/tech-articles/book-of-ibuttonreg-standards.pdf)
 - [DS1990A](https://www.analog.com/media/en/technical-documentation/data-sheets/ds1990a.pdf)
 - [DS1990R](https://www.analog.com/media/en/technical-documentation/data-sheets/DS1990R-DS1990R-F5.pdf)
 
 ## 🙏 Thanks
-
 - The creator(s) of the [OneWire](https://github.com/PaulStoffregen/OneWire) library iButtonTag depends on. It's a very solid implementation of the 1-Wire protocol. I learned a lot by studying the protocol documentation in combination with the source of this library.
 - The creator(s) of the [DallasTemperature](https://github.com/milesburton/Arduino-Temperature-Control-Library) library. When studying the 1-Wire protocol, working with the Dallas DS18B20 Temperature Sensor made everything more practical. In this period I also tried to contribute to this library.
 
 ## 🗒️ License
+MIT License, full text available in [LICENSE](https://github.com/vdwulp/iButtonTag/blob/main/LICENSE) file.
 
-MIT License | Copyright (c) 2025 SA van der Wulp
-
-Full license text available in [LICENSE](LICENSE) file.
+Copyright (c) 2025 SA van der Wulp
