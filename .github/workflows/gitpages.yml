@@ -7,7 +7,8 @@ on:
   pull_request:
 
 jobs:
-  test:
+  GitHubPages:
+    runs-on: ubuntu-latest
     steps:
       - name: Push documentation to GitHub Pages
         uses: nkoppel/push-files-to-another-repository@v1.1.4
