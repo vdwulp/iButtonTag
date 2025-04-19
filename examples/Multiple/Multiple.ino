@@ -1,6 +1,7 @@
-// SA van der Wulp    | March 26, 2025
+// SA van der Wulp    | April 14, 2025
 // Copyright (c) 2025 | MIT License
-// https://github.com/vdwulp/iButtonTag
+// https://vdwulp.github.io/iButtonTag
+
 
 // Include the library
 #include <iButtonTag.h>
@@ -15,9 +16,11 @@ iButtonTag ibutton( PIN_PROBE );
  * The setup function.
  */
 void setup( void ) {
+
   // Start serial port
   Serial.begin( 9600 );
   Serial.println( "iButtonTag Library Demo" );
+
 }
 
 /*
@@ -30,6 +33,7 @@ void setup( void ) {
  */
 void loop(void)
 {
+
   // Variable to store identification code
   iButtonCode code;
 
@@ -46,11 +50,11 @@ void loop(void)
   // Keep trying to get next code until status indicates there are no more codes
   while ( status = ibutton.nextCode( code ) != 0 ) {
 
-    // Variable /status/ will now indicate the succes
+    // Variable _status_ will now indicate success/failure
     switch( status ) {
       
-      case 1: // Succes
-        Serial.print( "iButton code read succesfully: " );
+      case 1: // Success
+        Serial.print( "iButton code read successfully: " );
         ibutton.printCode( code ); // Variable _code_ contains the ID-code
         Serial.println();
         break;
