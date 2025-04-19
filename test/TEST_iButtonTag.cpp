@@ -1,6 +1,7 @@
-// SA van der Wulp    | April 2, 2025
+// SA van der Wulp    | April 14, 2025
 // Copyright (c) 2025 | MIT License
-// https://github.com/vdwulp/iButtonTag
+// https://vdwulp.github.io/iButtonTag
+
 
 #include <ArduinoUnitTests.h>
 #include <iButtonTag.h>
@@ -23,11 +24,6 @@ unittest( iButtonTag_basics ) {
   iButtonTag ibutton( 2 );
 
   // Function readCode
-  // Return values:
-  //    1 - Next iButton read succesfully, code array filled with identifying code
-  //    0 - No more iButtons detected, code array is unchanged
-  //   -1 - Invalid iButton code read, CRC8 failed, code array with invalid bytes
-  //   -2 - Invalid iButton code read, all zeros, code array with invalid bytes
   assertEqual( 0, ibutton.readCode( code ) );         // No iButton detected
   assertTrue( ibutton.equalCode( code, codezero ) );
 
@@ -38,34 +34,19 @@ unittest( iButtonTag_basics ) {
   assertTrue( ibutton.equalCode( code, codezero ) );
 
   // Function readCodes
-  // Return values:
-  //    1 - At least one iButton detected, enumerate with nextCode function
-  //    0 - No iButton detected
   assertEqual( 0, ibutton.readCodes() );              // No iButton detected
 
   // Function nextCode
-  // Return values:
-  //    1 - Next iButton read succesfully, code array filled with identifying code
-  //    0 - No more iButtons detected, code array is unchanged
-  //   -1 - Invalid iButton code read, CRC8 failed, code array with invalid bytes
-  //   -2 - Invalid iButton code read, all zeros, code array with invalid bytes
   assertEqual( 0, ibutton.nextCode( code ) );         // No iButton detected
   assertTrue( ibutton.equalCode( code, codezero ) );
 
   // Function testCode
-  // Return values:
-  //    1 - iButton code valid
-  //   -1 - iButton code invalid, CRC8 failed
-  //   -2 - iButton code invalid, all zeros
   assertEqual( -2, ibutton.testCode( code ) );        // Invalid code, all zeros
   assertEqual( -2, ibutton.testCode( codezero ) );    // Invalid code, all zeros
   assertEqual( -1, ibutton.testCode( codecrcfail ) ); // Invalid code, CRC failed
   assertEqual( 1, ibutton.testCode( codecrc ) );      // Valid code
 
   // Function equalCode
-  // Return values:
-  //   true - The two iButtonCode's are equal
-  //   false - The two iButtonCode's are *NOT* equal
   assertFalse( ibutton.equalCode( codezero, codecrc ) );
   assertFalse( ibutton.equalCode( codezero, codecrcfail ) );
   assertFalse( ibutton.equalCode( codecrc, codecrcfail ) );
@@ -102,23 +83,9 @@ unittest( iButtonTag_basics ) {
   assertEqual( "47 3D 33 29 1F 15 0B 01", state -> serialPort[0].dataOut );
 
   // Function detectWritableType
-  // Return values:
-  //   >0 - iButton writable type found as indicated by type constant
-  //    0 - iButton writable type unknown, no detectable writable type found
-  //   -1 - No iButton detected
   assertEqual( -1, ibutton.detectWritableType() );
 
   // Function writeCode
-  // Return values:
-  //    1 - Writing procedure finished successfully
-  //    0 - No iButton detected at some time during procedure
-  //   -1 - iButton code invalid, CRC8 failed
-  //   -2 - iButton code invalid, all zeros
-  //  -11 - iButton writable type invalid, supplied value out of range
-  //  -12 - iButton writable type not detectable, supply specific type constant
-  //  -13 - iButton writable type incorrect, unexpected response while testing
-  //  -21 - Writing code failed, code read after writing procedure is not equal
-  //  -22 - Writing code failed, unexpected response while writing
   assertEqual(   0, ibutton.writeCode( codecrc ) );
   assertEqual(  -1, ibutton.writeCode( codecrcfail ) );
   assertEqual(  -2, ibutton.writeCode( codezero ) );
