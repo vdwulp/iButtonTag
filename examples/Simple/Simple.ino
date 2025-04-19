@@ -1,6 +1,7 @@
-// SA van der Wulp    | March 26, 2025
+// SA van der Wulp    | April 14, 2025
 // Copyright (c) 2025 | MIT License
-// https://github.com/vdwulp/iButtonTag
+// https://vdwulp.github.io/iButtonTag
+
 
 #include <iButtonTag.h>                     // Include the library
 
@@ -9,19 +10,23 @@
 iButtonTag ibutton( PIN_PROBE );            // Setup iButtonTag on the pin
 
 void setup(void) {
+
   Serial.begin( 9600 );
   Serial.println( "iButtonTag Library Demo" );
+
 }
 
 void loop(void) {
+
   iButtonCode code;                         // Variable to store ID-code
   
   Serial.println( "Reading... " );
   int8_t status = ibutton.readCode( code ); // Try to read ID-code
   
-  if ( status > 0 ) {                       // Code read succesfully
+  if ( status > 0 ) {                       // Code read successfully
     Serial.print( "iButton code read: " );
     ibutton.printCode( code );              // ID-code is in variable _code_
     Serial.println();
   }
+
 }
