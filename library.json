@@ -1,16 +1,16 @@
 {
   "name": "iButtonTag",
-  "version": "1.1.0", 
+  "version": "1.1.1", 
   "description": "Handle iButton identification tags such as DS1990A, TM1990A, RW1990, RW1990.2, RW2004, TM2004, TM01 and many others. Supports writing a new identification code to (re)writable iButton tags and reading of multiple iButton probes on the same data line.",
-  "keywords": "iButton, tag, identification, id, code, probe, onewire, 1-wire, bus, write, rewrite, writable, rewritable, DS1990, DS1990A, DS1990R, TM1990A, RW1990, RW1990.1, RW1990v1, TM08, TM08v2, RW1990.2, RW1990v2, RW2004, TM2004, TM01, TM01C",
-  "homepage": "https://github.com/vdwulp/iButtonTag",
+  "keywords": "iButton, tag, key, identification, id, probe, write, rewrite, writable, rewritable, DS1990, RW1990, RW1990.2, RW2004, TM01, TM08, TM1990, TM2004",
+  "homepage": "https://vdwulp.github.io/iButtonTag/",
   "repository": {
     "type": "git",
     "url": "https://github.com/vdwulp/iButtonTag.git"
   },
   "authors": {
       "name": "SA van der Wulp",
-      "url": "https://github.com/vdwulp/iButtonTag",
+      "url": "https://vdwulp.github.io",
       "maintainer": true
     },
   "license": "MIT",
