@@ -8,7 +8,7 @@
 
 An Arduino library handling iButton identification tags.
 
-## 👍 Supported Devices
+## 👍 Supported devices
 
 | Model                                    | Reading ID-code | Writing ID-code |
 |:-----------------------------------------|:---------------:|:---------------:|
@@ -38,14 +38,14 @@ _If you don't see the Install All button mentioned in step 5, you have an older 
 3. Select the downloaded ZIP file
 4. Repeat steps above to install required _OneWire_ library; in step 1 download ZIP file from [OneWire releases](https://github.com/PaulStoffregen/OneWire/releases/latest)
 
-## 🚶 Basic Usage
+## 🚶 Basic usage
 
-### Hardware Setup
+### Hardware setup
 - Connect data line of iButton probe to an Arduino digital pin, this is the 1-Wire data line.
 - Connect a 2200 Ω to 4700 Ω pull-up resistor between the 1-Wire data line and Arduino 5V pin.
 - Connect ground line of iButton probe to an Arduino ground (GND) pin.
 
-### Code Example
+### Code example
 
    ```cpp
    #include <iButtonTag.h>                     // Include the library
@@ -64,7 +64,7 @@ _If you don't see the Install All button mentioned in step 5, you have an older 
      Serial.println( "Reading... " );
      int8_t status = ibutton.readCode( code ); // Try to read ID-code
 
-     if ( status > 0 ) {                       // Code read succesfully
+     if ( status > 0 ) {                       // Code read successfully
        Serial.print( "iButton code read: " );
        ibutton.printCode( code );              // ID-code is in variable _code_
        Serial.println();
@@ -72,30 +72,35 @@ _If you don't see the Install All button mentioned in step 5, you have an older 
    }
    ```
 
-## 🏃 Advanced Features
+More [examples](https://vdwulp.github.io/iButtonTag/examples.html) are available after installation in the Arduino IDE via _File-menu > Examples > iButtonTag_.
+
+## 🏃 Advanced features
 - Writing new identification code to (re)writable iButton tag models
 - Reading multiple iButton probes on the same 1-Wire data line
 
-## 🛠️ Hardware Notes
+## 🛠️ Hardware notes
 
 ### iButton identification tags
+- iButton tags are used for many purposes, including as key to lock of office, hotel sauna or cabinet, also to (de)activate alarm systems and log attendance/time.
 - Many iButton tags have their identification code engraved on them in hexadecimal: in the center the _reversed_ tag specific 6-byte code, above it on the right side 1-byte family code and on the left side 1-byte checksum. When read by this library the order is: family code - tag specific code - checksum.
 - Official iButton identification tags all have a unique identification code that _cannot_ be changed. However, this library supports writing a new code to multiple types of (re)writable _compatible_ tags.
 - DS1990 (not DS1990A or DS1990R) can't be used with multiple identification tags on a single data line and requires special handling. For details see comments on function [readCode](https://vdwulp.github.io/iButtonTag/REFERENCE.html#readCode) in [reference documentation](https://vdwulp.github.io/iButtonTag/REFERENCE.html).
 
-### Pull-up resistor
-- The official recommendation is to use a 4700 Ω pull-up resistor between the 1-Wire data line and Arduino 5V pin when _reading_ from an iButton tag.
-- Writing a new code to (re)writable iButton tags may require _more power_ for a successful and persistent result. To get more power to the tag, a 2200 Ω pull-up resistor between the 1-Wire data line and Arduino 5V pin has been tested to be a good value.
-
 ### iButton probes
-- iButton probes come in many forms, some have LED-indicator(s) with one or two colors, see [some examples](https://vdwulp.github.io/iButtonTag/probes.html#examples).
+- [iButton probes](https://vdwulp.github.io/iButtonTag/probes.html) come in many forms, some have LED-indicator(s) with one or two colors, see [some examples](https://vdwulp.github.io/iButtonTag/probes.html#examples).
 - No probe? No problem... see instructions in [probe documentation](https://vdwulp.github.io/iButtonTag/probes.html#noprobe).
 
-## 📓 Documentation & References
+### Pull-up resistor
+- The official recommendation is to use a 4700 Ω pull-up resistor between the 1-Wire data line and Arduino 5V pin when _reading_ from an iButton tag.
+- _Writing_ a new code to (re)writable iButton tags may require _more power_ for a successful and persistent result. To get more power to the tag, a 2200 Ω pull-up resistor between the 1-Wire data line and Arduino 5V pin has been tested to be a good value.
 
-### Documentation
-- Complete iButtonTag library [reference documentation](https://vdwulp.github.io/iButtonTag/REFERENCE.html) with detailed information on all types, constants and functions.
-- iButtonTag library [GitHub repository](https://github.com/vdwulp/iButtonTag).
+## 🔗 Quick links
+- [General information](https://vdwulp.github.io/iButtonTag/) (this file)
+- [Reference documentation](https://vdwulp.github.io/iButtonTag/REFERENCE.html)
+- [GitHub repository](https://github.com/vdwulp/iButtonTag)
+- [Download latest release](https://github.com/vdwulp/iButtonTag/releases/latest)
+
+## 📓 Documentation
 
 ### Articles
 - [What is an iButton Device?](https://www.analog.com/media/en/technical-documentation/tech-articles/what-is-an-ibutton-device.pdf)
@@ -113,4 +118,4 @@ _If you don't see the Install All button mentioned in step 5, you have an older 
 ## 🗒️ License
 MIT License, full text available in [LICENSE](https://github.com/vdwulp/iButtonTag/blob/main/LICENSE) file.
 
-Copyright (c) 2025 SA van der Wulp
+Copyright (c) 2025 SA van der Wulp<img src="https://profile-counter.glitch.me/vdwulp_iButtonTag/count.svg" alt="counter" width=1 height=1>
