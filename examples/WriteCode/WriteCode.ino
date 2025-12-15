@@ -1,6 +1,7 @@
-// SA van der Wulp    | April 4, 2025
+// SA van der Wulp    | April 14, 2025
 // Copyright (c) 2025 | MIT License
-// https://github.com/vdwulp/iButtonTag
+// https://vdwulp.github.io/iButtonTag
+
 
 #include <iButtonTag.h>                     // Include the library
 
@@ -64,9 +65,9 @@ void setup(void) {
   //
   //   int8_t status = ibutton.writeCode( newcode, IBUTTON_TM01 );
 
-  // Evaluate succes/failure based on returned status
+  // Evaluate success/failure based on returned status
   Serial.print( "Writing procedure finished " );
-  if ( status == 1 ) Serial.print( "succesfully");
+  if ( status == 1 ) Serial.print( "successfully");
   else Serial.print( "with an error" ) ;
   Serial.print( " (status " );
   Serial.print( status );
@@ -78,7 +79,7 @@ void setup(void) {
   ibutton.printCode( currentcode );
   Serial.println();
 
-  // Evaluate succes/failure based on iButtoncode read from tag
+  // Evaluate success/failure based on iButtoncode read from tag
   Serial.print( "Current code on tag *is" );
   if ( !ibutton.equalCode( oldcode, currentcode ) ) Serial.print( " not" );
   Serial.println( "* the same as before writing" );
@@ -105,7 +106,7 @@ iButtonTag Library Demo
 
 Old code on iButton tag     : 01 0B 15 1F 29 33 3D E8
 New code for iButton tag    : 01 23 45 67 89 AB CD E9
-Writing procedure finished succesfully (1)
+Writing procedure finished successfully (1)
 Current code on iButton tag : 01 23 45 67 89 AB CD E9
 Current code on tag *is not* the same as before writing
 Current code on tag *is* the same as new code supplied

@@ -1,4 +1,10 @@
-# [📚 Arduino iButtonTag Library](https://github.com/vdwulp/iButtonTag)
+# [📚 Arduino iButtonTag Library](https://vdwulp.github.io/iButtonTag/)
+
+## 🔗 Quick links
+- [General information](https://vdwulp.github.io/iButtonTag/)
+- [Reference documentation](https://vdwulp.github.io/iButtonTag/REFERENCE.html)
+- [GitHub repository](https://github.com/vdwulp/iButtonTag)
+- [Download latest release](https://github.com/vdwulp/iButtonTag/releases/latest)
 
 ## iButton probes
 - iButton probes come in many forms, some have LED-indicator(s) with one or two colors.

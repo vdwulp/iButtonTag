@@ -1,42 +1,42 @@
-// SA van der Wulp    | April 3, 2025
+// SA van der Wulp    | April 14, 2025
 // Copyright (c) 2025 | MIT License
-// https://github.com/vdwulp/iButtonTag
+// https://vdwulp.github.io/iButtonTag
+
+
+/*
+ * Reference documentation available in doc-folder of library. Only short
+ * descriptions in this source file. Full documentation can be viewed online
+ * via: https://vdwulp.github.io/iButtonTag/REFERENCE.html
+ */
+
 
 #include "iButtonTag.h"
 
-// Constructs an iButtonTag object linked to the supplied pin.
+
+// PUBLIC FUNCTIONS
+
+/*
+ * Constructs an iButtonTag object linked to the supplied pin.
+ *
+ * See https://vdwulp.github.io/iButtonTag/REFERENCE.html#constructor
+ */
 iButtonTag::iButtonTag( uint8_t pin ) {
   _wire = new OneWire( pin );
 }
 
-// Reads one single iButton identifying code from the OneWire.
-//
-// When multiple iButtons are connected to the OneWire this function will return
-// an invalid reading because of a CRC8 failure (return value -2) caused by
-// colliding responses. If there is _any_ possibility multiple iButtons are
-// connected, use _getCodes_ instead.
-//
-// DS1990 iButton tags can't be used with multiple tags on a single 1-Wire bus
-// and require special handling. This function facilitates compatibility with
-// the DS1990 iButton Tags when argument _old_ is set to true. However, this
-// reduces compatibility with other iButton tags: DS1990A, DS1990R and TM1990A
-// will still be handled correctly (they offer backwards compatibility), but
-// other 1-Wire devices (including iButtons) won't and may even show unexpected
-// behaviour.
-//
-// Return values:
-//    1 - Next iButton read succesfully, code array filled with identifying code
-//    0 - No more iButtons detected, code array is unchanged
-//   -1 - Invalid iButton code read, CRC8 failed, code array with invalid bytes
-//   -2 - Invalid iButton code read, all zeros, code array with invalid bytes
+/*
+ * Reads one single iButtonCode from the data line.
+ *
+ * See https://vdwulp.github.io/iButtonTag/REFERENCE.html#readCode
+ */
 int8_t iButtonTag::readCode( uint8_t* code, bool old /* = false */ ) {
-  // RESET the OneWire
+  // RESET the data line
   // - Connected devices will assert presence with a pulse
   // - Returns 1 if at least one device is present, 0 otherwise
   // - Exit with status 0 when no device asserted presence
   if ( _wire -> reset() == 0 ) return 0;
 
-  // Issue READ ROM command to the OneWire
+  // Issue READ ROM command to the data line
   // - 0x33 is protocol standard
   // - 0x0F for compatibility with DS1990
   _wire -> write( old ? 0x0F : 0x33 );
@@ -47,48 +47,31 @@ int8_t iButtonTag::readCode( uint8_t* code, bool old /* = false */ ) {
   return testCode( code );
 }
 
-// Starts the search for multiple iButton identifying codes on the OneWire.
-//
-// Resets the domain to search for iButton identifying codes. This function is
-// needed to start searching for codes _again_. It's not really needed the first
-// time, though it's good practice to always use it before enumerating codes
-// with the nextCode function.
-//
-// Return values:
-//    1 - At least one iButton detected, enumerate with nextCode function
-//    0 - No iButton detected
+/*
+ * Starts the search for multiple iButtonCode's on the data line.
+ *
+ * See https://vdwulp.github.io/iButtonTag/REFERENCE.html#readCodes
+ */
 int8_t iButtonTag::readCodes() {
-  // RESET the OneWire
+  // RESET the data line
   // - Connected devices will assert presence with a pulse
   // - Returns 1 if at least one device is present, 0 otherwise
   // - Exit with status 0 when no device asserted presence
   if ( _wire -> reset() == 0 ) return 0;
 
-  // Reset search domain on OneWire
+  // Reset search domain on data line
   _wire -> reset_search();
 
   return 1;
 }
 
-// Continues the search for multiple iButton identifying codes on the OneWire.
-//
-// Start the search for multiple iButton identyfying codes with the readCodes
-// function. The is this function to enumerate all iButton identifying codes on
-// the OneWire.
-//
-// A return value 0 means searching finished succesfully, but there are no more
-// iButtons on the OneWire. Negative return values indicate a problem during the
-// search (mostly due to movement of the iButton on the reader), but additional
-// calls to the function _may_ yield new iButton identifying codes. However, the
-// overall result will be unreliable.
-//
-// Return values:
-//    1 - Next iButton read succesfully, code array filled with identifying code
-//    0 - No more iButtons detected, code array is unchanged
-//   -1 - Invalid iButton code read, CRC8 failed, code array with invalid bytes
-//   -2 - Invalid iButton code read, all zeros, code array with invalid bytes
+/*
+ * Continues the search for multiple iButtonCode's on the data line.
+ *
+ * See https://vdwulp.github.io/iButtonTag/REFERENCE.html#nextCode
+ */
 int8_t iButtonTag::nextCode( uint8_t* code ) {
-  // Search for the next identification code on OneWire
+  // Search for the next iButtonCode on data line
   // - Returns 1 when a code is found, 0 when there are no more iButtons
   // - Exit with status 0 when no more iButtons are detected
   if ( _wire -> search( code ) == 0 ) return 0;
@@ -97,12 +80,11 @@ int8_t iButtonTag::nextCode( uint8_t* code ) {
   return testCode( code );
 }
 
-// Tests iButtonCode for validity.
-//
-// Return values:
-//    1 - iButton code valid
-//   -1 - iButton code invalid, CRC8 failed
-//   -2 - iButton code invalid, all zeros
+/*
+ * Tests iButtonCode for validity.
+ *
+ * See https://vdwulp.github.io/iButtonTag/REFERENCE.html#testCode
+ */
 int8_t iButtonTag::testCode( const uint8_t* code ) {
   // Check if last byte of code is CRC8 of first 7 bytes
   // - Exit with status -1 when CRC8 fails
@@ -113,10 +95,10 @@ int8_t iButtonTag::testCode( const uint8_t* code ) {
   // it doesn't even say values 0xFF (observed when no iButton is present) or
   // 0x00 (observed when reader is shorted) are invalid. In theory these values
   // are possible, as long as an iButton asserts presence in response to the
-  // OneWire RESET command.
+  // RESET command.
   // However, sliding around an iButton on a reader may lead to a code of 8 0x00
-  // bytes being 'succesfully' read (how? apparently reset is succesfull, then a
-  // short occurs?). Then, the CRC8 is also correct (0x00), so this case needs
+  // bytes being 'successfully' read (how? apparently reset is successfull, then
+  // a short occurs?). Then, the CRC8 is also correct (0x00), so this case needs
   // an extra check to raise an error status.
   // Because it _is_ theoretically possible to have a FAMILY CODE of 0x00, we
   // need to check all code positions and thus only exclude one specific case.
@@ -132,22 +114,21 @@ int8_t iButtonTag::testCode( const uint8_t* code ) {
   return 1;
 }
 
-// Tests if two iButtonCode's are equal.
-//
-// Return values:
-//   true - The two iButtonCode's are equal
-//   false - The two iButtonCode's are *NOT* equal
+/*
+ * Tests if two iButtonCode's are equal.
+ *
+ * See https://vdwulp.github.io/iButtonTag/REFERENCE.html#equalCode
+ */
 bool iButtonTag::equalCode( const uint8_t* a, const uint8_t* b ) {
   for( uint8_t i = 0; i < 8; i++ ) if ( a[i] != b[i] ) return false;
   return true;
 }
 
-// Prints iButtonCode to Serial as hexadecimal byte values. 
-//
-// Serial must be initialised in the main code first. By default the bytes are
-// printed as received from the iButton (reverse = false). The order can be
-// reversed (reverse = true) to match the sequence fysically engraved on many
-// iButtons.
+/*
+ * Prints iButtonCode to Serial as hexadecimal byte values.
+ *
+ * See https://vdwulp.github.io/iButtonTag/REFERENCE.html#printCode
+ */
 void iButtonTag::printCode( const uint8_t* code, bool reverse /* = false */ ) {
   for( uint8_t i = 0; i < 8; i++ ) {
     uint8_t j = reverse ? 7 - i : i;
@@ -157,31 +138,20 @@ void iButtonTag::printCode( const uint8_t* code, bool reverse /* = false */ ) {
   }
 }
 
-// Updates checksum of iButtonCode to a correct value.
+/*
+ * Updates checksum of iButtonCode to the correct value.
+ *
+ * See https://vdwulp.github.io/iButtonTag/REFERENCE.html#updateChecksum
+ */
 void iButtonTag::updateChecksum( uint8_t* code ) {
   code[7] = calculateChecksum( code );
 }
 
-// Detects type of (re)writable iButton tag.
-//
-// Performs multiple tests to check for known reponses of (re)writable iButton
-// tag types. If a detectable (re)writable type is found, the return value
-// indicates the specific model. All supported (re)writable types are defined
-// as _iButton (re)writable tag type_ constants, like IBUTTON_RW1990V1,
-// IBUTTON_RW1990V2, IBUTTON_RW2004 or IBUTTON_TM01.
-//
-// A return value of _iButton (re)writable type_ constant IBUTTON_UNKNOWN may
-// indicate one of the following:
-// - iButton tag _is not_ a (re)writable tag. However, it _is_ readable.
-// - iButton tag _is not_ of a (re)writable type supported by this library.
-//   However, it _is_ readable.
-// - iButton tag _is_ of a (re)writable type supported by this library. However,
-//   this specific type _is not_ detectable, like IBUTTON_TM01.
-//
-// Return values:
-//   >0 - iButton writable type found as indicated by type constant
-//    0 - iButton writable type unknown, no detectable writable type found
-//   -1 - No iButton detected
+/*
+ * Detects type of (re)writable iButton tag.
+ *
+ * See https://vdwulp.github.io/iButtonTag/REFERENCE.html#detectWritableType
+ */
 int8_t iButtonTag::detectWritableType() {
   int8_t t = isWritableTypeRW1990V1();
   if ( t == 1 ) return IBUTTON_RW1990V1; // Detected
@@ -198,46 +168,11 @@ int8_t iButtonTag::detectWritableType() {
   return IBUTTON_UNKNOWN;
 }
 
-// Writes a new iButton identifying code to a (re)writable tag.
-//
-// Strong recommendations, please read carefully:
-// - It is recommended to have _only one_ iButton probe/tag connected to the
-//   data line when writing. Some iButton (re)writable tag types will allow
-//   multiple tags to be written at the same time, but it may lead to failure.
-// - It is _also_ recommended to only supply the new code as an argument. The
-//   function will try to detect a (re)writable iButton tag type. If it fails,
-//   you should seriously check if the tag really is a (re)writable tag of a
-//   type supported by this library. As iButton tag type TM01 is non-detectable,
-//   this type will never be detected. In this case supply iButton (re)writable
-//   tag type constant IBUTTON_TM01. To override auto-detection in other cases,
-//   you can also supply an iButton (re)writable tag type constant.
-// - It is _also_ recommended to have checking _on_ like the default, making
-//   sure as much checks as possible are done before actually writing a new code
-//   to the iButton tag. As some writeble tags are just _write once_ there is a
-//   risk in trying to write without appropriate checking.
-//
-// This function supports writing a new iButton identification code to tag
-// models RW1990, RW1990.1, ТM08, ТM08v2 (type IBUTTON_RW1990V1), RW1990v2,
-// RW1990.2 (type IBUTTON_RW1990V2), RW2004, TM2004 (type IBUTTON_RW2004), TM01
-// and TM01C (type IBUTTON_TM01).
-//
-// Return values, grouped:
-//          1 - Writing procedure finished successfully
-//          0 - No iButton detected at some time during procedure
-//   -1 to -9 - Problem related to supplied code
-// -11 to -19 - Problem related to supplied type
-// -21 to -29 - Failure of actual writing
-//
-// Return values, specific:
-//    1 - Writing procedure finished successfully
-//    0 - No iButton detected at some time during procedure
-//   -1 - iButton code invalid, CRC8 failed
-//   -2 - iButton code invalid, all zeros
-//  -11 - iButton writable type invalid, supplied value out of range
-//  -12 - iButton writable type not detectable, supply specific type constant
-//  -13 - iButton writable type incorrect, unexpected response while testing
-//  -21 - Writing code failed, code read after writing procedure is not equal
-//  -22 - Writing code failed, unexpected response while writing
+/*
+ * Writes a new iButtonCode to a (re)writable tag.
+ *
+ * See https://vdwulp.github.io/iButtonTag/REFERENCE.html#writeCode
+ */
 int8_t iButtonTag::writeCode( const uint8_t* code,
                               int8_t type /* = IBUTTON_UNKNOWN */,
                               bool check /* = true */ ) {
@@ -297,23 +232,30 @@ int8_t iButtonTag::writeCode( const uint8_t* code,
       break;
   }
 
-  // Writing procedure finished, check success by reading code
-  iButtonCode result;
-  readCode( result );
-  if ( !equalCode( result, code ) ) return -21;
+  // Writing procedure finished, check success if checking is on
+  if ( check ) {
+    iButtonCode result;
+    readCode( result );
+    if ( !equalCode( result, code ) ) return -21;
+  }
 
   return 1;
 
 }
 
-// Performs test to determine if iButton tag is of (re)writable type RW1990v1.
-//
-// This type includes iButton tag models RW1990, RW1990.1, ТM08 and ТM08v2.
-//
-// Return values:
-//    1 - iButton _is_ of (re)writable type RW1990v1
-//    0 - iButton _is not_ of (re)writable type RW1990v1
-//   -1 - No iButton detected during test
+
+// PRIVATE FUNCTIONS
+
+/*
+ * Performs test to determine if iButton tag is of (re)writable type RW1990v1.
+ *
+ * This type includes iButton tag models RW1990, RW1990.1, ТM08 and ТM08v2.
+ *
+ * Return values:
+ *    1 - iButton _is_ of (re)writable type RW1990v1
+ *    0 - iButton _is not_ of (re)writable type RW1990v1
+ *   -1 - No iButton detected during test
+ */
 int8_t iButtonTag::isWritableTypeRW1990V1() {
   // Write flag value 1 (writing disabled)
   if ( _wire -> reset() == 0 ) return -1;
@@ -329,14 +271,16 @@ int8_t iButtonTag::isWritableTypeRW1990V1() {
   return 0;
 }
 
-// Performs test to determine if iButton tag is of (re)writable type RW1990v2.
-//
-// This type includes iButton tag models RW1990v2 and RW1990.2.
-//
-// Return values:
-//    1 - iButton _is_ of (re)writable type RW1990v2
-//    0 - iButton _is not_ of (re)writable type RW1990v2
-//   -1 - No iButton detected during test
+/*
+ * Performs test to determine if iButton tag is of (re)writable type RW1990v2.
+ *
+ * This type includes iButton tag models RW1990v2 and RW1990.2.
+ *
+ * Return values:
+ *    1 - iButton _is_ of (re)writable type RW1990v2
+ *    0 - iButton _is not_ of (re)writable type RW1990v2
+ *   -1 - No iButton detected during test
+ */
 int8_t iButtonTag::isWritableTypeRW1990V2() {
   // Write flag value 1 (writing enabled)
   if ( _wire -> reset() == 0 ) return -1;
@@ -359,14 +303,16 @@ int8_t iButtonTag::isWritableTypeRW1990V2() {
   return 0;
 }
 
-// Performs test to determine if iButton tag is of (re)writable type RW2004.
-//
-// This type includes iButton tag models RW2004 and TM2004.
-//
-// Return values:
-//    1 - iButton _is_ of (re)writable type RW2004
-//    0 - iButton _is not_ of (re)writable type RW2004
-//   -1 - No iButton detected during test
+/*
+ * Performs test to determine if iButton tag is of (re)writable type RW2004.
+ *
+ * This type includes iButton tag models RW2004 and TM2004.
+ *
+ * Return values:
+ *    1 - iButton _is_ of (re)writable type RW2004
+ *    0 - iButton _is not_ of (re)writable type RW2004
+ *   -1 - No iButton detected during test
+ */
 int8_t iButtonTag::isWritableTypeRW2004() {
   // Send command 0xAA to read status register starting address 0x00 0x00. The
   // response of RW2004/TM2004 is CRC8 of those three bytes, followed by one
@@ -392,20 +338,22 @@ int8_t iButtonTag::isWritableTypeRW2004() {
   return result;
 }
 
-// Writes new iButtonCode to (re)writable types RW1990V1, RW1990V2 and TM01
-// without checks.
-//
-// These types include iButton tag models RW1990, RW1990.1, ТM08, ТM08v2 (type
-// IBUTTON_RW1990V1), RW1990v2, RW1990.2 (type IBUTTON_RW1990V2), TM01 and TM01C
-// (type IBUTTON_TM01).
-//
-// When using this function, apart from the new iButtonCode, the byte-code for
-// the type-specific write-enable command needs to be supplied. For RW1990V1 all
-// written bits need to be inverted.
-
-// Return values:
-//    1 - Writing procedure finished successfully
-//    0 - No iButton detected at some time during procedure
+/*
+ * Writes new iButtonCode to (re)writable types RW1990V1, RW1990V2 and TM01
+ * without checks.
+ *
+ * These types include iButton tag models RW1990, RW1990.1, ТM08, ТM08v2 (type
+ * IBUTTON_RW1990V1), RW1990v2, RW1990.2 (type IBUTTON_RW1990V2), TM01 and TM01C
+ * (type IBUTTON_TM01).
+ *
+ * When using this function, apart from the new iButtonCode, the byte-code for
+ * the type-specific write-enable command needs to be supplied. For RW1990V1 all
+ * written bits need to be inverted.
+ *
+ * Return values:
+ *    1 - Writing procedure finished successfully
+ *    0 - No iButton detected at some time during procedure
+ */
 int8_t iButtonTag::writeCodeCommon( const uint8_t* code, uint8_t enablecommand,
                                     bool invert /* = false */ ) {
   // Set flag value to [writing enabled]
@@ -424,14 +372,16 @@ int8_t iButtonTag::writeCodeCommon( const uint8_t* code, uint8_t enablecommand,
   return 1;
 }
 
-// Writes new iButtonCode to (re)writable type RW2004 without checks.
-//
-// This type includes iButton tag models RW2004 and TM2004.
-//
-// Return values:
-//    1 - Writing procedure finished successfully
-//    0 - No iButton detected at some time during procedure
-//  -22 - Writing code failed, unexpected response while writing
+/*
+ * Writes new iButtonCode to (re)writable type RW2004 without checks.
+ *
+ * This type includes iButton tag models RW2004 and TM2004.
+ *
+ * Return values:
+ *    1 - Writing procedure finished successfully
+ *    0 - No iButton detected at some time during procedure
+ *  -22 - Writing code failed, unexpected response while writing
+ */
 int8_t iButtonTag::writeCodeRW2004( const uint8_t* code ) {
   // Send command 0x3C to start writing at address 0x00 0x00. Then the code is
   // written byte-by-byte: write byte > read value > send program pulse > read
@@ -462,12 +412,14 @@ int8_t iButtonTag::writeCodeRW2004( const uint8_t* code ) {
   return 1;
 }
 
-// Writes a byte to the OneWire with a delay after each bit.
-//
-// By default the byte is written _as is_, if indicated all bits are inverted.
-// 
-// The OneWire data line stays _high_ after this function. Calling procedures
-// should perform other actions on the OneWire or _depower_.
+/*
+ * Writes a byte to the data line with a delay after each bit.
+ *
+ * By default the byte is written _as is_, if indicated all bits are inverted.
+ * 
+ * The data line stays _high_ after this function. Calling procedures should
+ * perform other actions on the data line or _depower_.
+ */
 void iButtonTag::writeByteDelayed( uint8_t b, bool invert /* = false */ ) {
   // Invert byte if specified
   if ( invert ) b = ~b;
@@ -477,10 +429,12 @@ void iButtonTag::writeByteDelayed( uint8_t b, bool invert /* = false */ ) {
   }  
 }
 
-// Writes a bit to the OneWire with a delay after it.
-//
-// The OneWire data line stays _high_ after this function. Calling procedures
-// should perform other actions on the OneWire or _depower_.
+/*
+ * Writes a bit to the data line with a delay after it.
+ *
+ * The data line stays _high_ after this function. Calling procedures should
+ * perform other actions on the data line or _depower_.
+ */
 void iButtonTag::writeBitDelayed( uint8_t b ) { // b can only be 0 or 1 !!
   // Write as always
   _wire -> write_bit( b );
@@ -488,9 +442,11 @@ void iButtonTag::writeBitDelayed( uint8_t b ) { // b can only be 0 or 1 !!
   delay( 10 );
 }
 
-// Calculates checksum of iButtonCode.
-//
-// Returns correct checksum value
+/*
+ * Calculates checksum of iButtonCode.
+ *
+ * Returns correct checksum value
+ */
 uint8_t iButtonTag::calculateChecksum( const uint8_t* code ) {
   return OneWire::crc8( code, 7 );
 }
