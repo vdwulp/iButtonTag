@@ -1,6 +1,7 @@
-// SA van der Wulp    | April 3, 2025
+// SA van der Wulp    | April 14, 2025
 // Copyright (c) 2025 | MIT License
-// https://github.com/vdwulp/iButtonTag
+// https://vdwulp.github.io/iButtonTag
+
 
 #ifndef iButtonTag_h
 #define iButtonTag_h
@@ -20,6 +21,7 @@
 // Type definition
 typedef uint8_t iButtonCode[8];
 
+// Class definition
 class iButtonTag {
 
   public:
