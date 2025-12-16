@@ -118,4 +118,4 @@ More [examples](https://vdwulp.github.io/iButtonTag/examples.html) are available
 ## 🗒️ License
 MIT License, full text available in [LICENSE](https://github.com/vdwulp/iButtonTag/blob/main/LICENSE) file.
 
-Copyright (c) 2025 SA van der Wulp<img src="https://profile-counter.glitch.me/vdwulp_iButtonTag/count.svg" alt="counter" width=1 height=1>
+Copyright (c) 2025 SA van der Wulp
