@@ -252,4 +252,3 @@ Example [WriteCode](https://vdwulp.github.io/iButtonTag/examples.html#WriteCode)
 | -13 | iButton writable type incorrect, unexpected response while testing
 | -21 | Writing code failed, code read after writing procedure is not equal
 | -22 | Writing code failed, unexpected response while writing
-<img src="https://profile-counter.glitch.me/vdwulp_iButtonTag_reference/count.svg" alt="counter" width=1 height=1>
